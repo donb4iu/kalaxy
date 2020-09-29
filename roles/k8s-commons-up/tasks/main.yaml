@@ -19,16 +19,33 @@
     name: ip6tables
     path: /usr/sbin/ip6tables-legacy
   failed_when: false
-- name: add apt-key for k8s
+#
+#- name: add apt-key for k8s
+#  apt_key:
+#    id: 6A030B21BA07F4FB
+#    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+#- name: add apt-repository for k8s
+#  copy:
+#    content: "deb https://apt.kubernetes.io/ kubernetes-xenial main\n"
+#    dest: /etc/apt/sources.list.d/kubernetes.list
+#  notify: apt-get update
+#- meta: flush_handlers
+#
+
+# Instructions: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl
+- name: add apt signing key for kubernetes (1/4)
   apt_key:
-    id: 6A030B21BA07F4FB
     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
-- name: add apt-repository for k8s
-  copy:
-    content: "deb https://apt.kubernetes.io/ kubernetes-xenial main\n"
-    dest: /etc/apt/sources.list.d/kubernetes.list
-  notify: apt-get update
-- meta: flush_handlers
+    state: present
+# Removed the following repo due to stability issues: https://apt.kubernetes.io/
+- name: adding apt repository for kubernetes (2/4)
+  apt_repository:
+    repo: deb http://packages.cloud.google.com/apt/ kubernetes-xenial main
+    state: present
+  register: kubernetes_repository
+  retries: 10
+  until: kubernetes_repository is success
+
 - name: install k8s
   apt:
     name:
