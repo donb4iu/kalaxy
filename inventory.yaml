@@ -2,39 +2,33 @@
 all:
   hosts:
     node-0:
-      ansible_host: 192.168.71.20
+      ansible_host: 192.168.2.50
     node-1:
-      ansible_host: 192.168.71.21
+      ansible_host: 192.168.2.51
     node-2:
-      ansible_host: 192.168.71.22
+      ansible_host: 192.168.2.52
     node-3:
-      ansible_host: 192.168.71.23
+      ansible_host: 192.168.2.53
     node-4:
-      ansible_host: 192.168.71.24
-    node-5:
-      ansible_host: 192.168.71.25
-    node-6:
-      ansible_host: 192.168.71.26
+      ansible_host: 192.168.2.54
   children:
     k3s_master:
       # At most one master:
       hosts:
-        node-1: {}
     k3s_worker:
       # At least one worker unless there is no master:
       hosts:
+    k8s_master:
+      hosts:
+        # Only one master!
         node-0: {}
+    k8s_worker:
+      hosts:
+      # At least one worker unless there is no master:
+        node-1: {}
         node-2: {}
         node-3: {}
         node-4: {}
-        node-5: {}
-        node-6: {}
-    k8s_master:
-      # At most one master:
-      hosts: {}
-    k8s_worker:
-      # At least one worker unless there is no master:
-      hosts: {}
     raspberry_pi:
       hosts:
         node-0: {}
@@ -42,8 +36,6 @@ all:
         node-2: {}
         node-3: {}
         node-4: {}
-        node-5: {}
-        node-6: {}
     raspbian:
       hosts: {}
       vars:
@@ -56,10 +48,8 @@ all:
         node-2: {}
         node-3: {}
         node-4: {}
-        node-5: {}
-        node-6: {}
       vars:
-        ansible_ssh_user: ubuntu
+        ansible_ssh_user: pi
         boot_directory: /boot/firmware
   vars:
     ansible_python_interpreter: /usr/bin/python3
