@@ -2,15 +2,19 @@
 - hosts: raspberry_pi
   roles:
     - raspberry-pi-up
+- hosts: amd64
+  roles:
+    - amd64-up
 - hosts: raspbian
   roles:
     - raspbian-up
-- hosts: ubuntu
+- hosts: rpi4
   roles:
     - ubuntu-up
 - hosts:
     - raspbian
-    - ubuntu
+    - rpi4
+    - amd64
   roles:
     - debian-up
 - hosts: all

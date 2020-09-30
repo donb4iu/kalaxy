@@ -19,6 +19,23 @@ flash \
 ```
 ## [Dashboard](https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md)
 
+**[18:39:42]donbuddenbaum@donbs-iMac:~/Documents/rPi4/kalaxy$** kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-rc7/aio/deploy/recommended.yaml --validate=false
+```
+namespace "kubernetes-dashboard" created
+serviceaccount "kubernetes-dashboard" created
+service "kubernetes-dashboard" created
+secret "kubernetes-dashboard-certs" created
+secret "kubernetes-dashboard-csrf" created
+secret "kubernetes-dashboard-key-holder" created
+configmap "kubernetes-dashboard-settings" created
+role "kubernetes-dashboard" created
+clusterrole "kubernetes-dashboard" created
+rolebinding "kubernetes-dashboard" created
+clusterrolebinding "kubernetes-dashboard" created
+deployment "kubernetes-dashboard" created
+service "dashboard-metrics-scraper" created
+deployment "dashboard-metrics-scraper" created
+```
 
 **[18:48:28]donbuddenbaum@donbs-iMac:~/Documents/rPi4/kalaxy$** kubectl apply -f CreatingaServiceAccount.yaml --validate=false
 ```
@@ -44,5 +61,6 @@ Data
 ====
 ca.crt:		1025 bytes
 namespace:	20 bytes
-token:		eyJhbGciOiJSUzI1NiIsImtpZCI6IkpSVm1oNGZHNXZfRHNWYWZ3aXFTeWZyZUJjaWhHcXV5amdwV1VlcmJTbncifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLWh2NTRuIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI5MjZlYzY2ZC01NzMzLTRjNzQtOGRkZi01OTJjYjZiNzAwMDciLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZXJuZXRlcy1kYXNoYm9hcmQ6YWRtaW4tdXNlciJ9.gNGfajnsjKuv0IolteUZBnfr9Kk53gap7sT-_t-p3bwu3pILlOpRHHZbVX0-qyR0omLcEzSPSy21EUOu3CNKkapMpuiiWeXE4tceCAvwXck2p1A6k-jbA-g7yh5f--NeaamvKlhjm7v26IKSBfF6W8SWXLOXg_dQHtI7Xyaf9bmfjNoB-kz5jMRDt_8jzmlHytVrS5xrcwD6-ntdW_E6QELLRf9Ze8tOGxFv9qq8pnHwKSCdsfSMr6evA0AL7yraaxNgN0VcQKzuetenQVSzR4Avm3nsvyuie9j-q0IODD8_H0rz-dW1qLrm82Eva9xDQy-PNF0JgihUrfVgBuqB_A```
+token:		eyJhbGciOiJSUzI1NiIsImtpZCI6IkpSVm1oNGZHNXZfRHNWYWZ3aXFTeWZyZUJjaWhHcXV5amdwV1VlcmJTbncifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLWh2NTRuIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI5MjZlYzY2ZC01NzMzLTRjNzQtOGRkZi01OTJjYjZiNzAwMDciLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZXJuZXRlcy1kYXNoYm9hcmQ6YWRtaW4tdXNlciJ9.gNGfajnsjKuv0IolteUZBnfr9Kk53gap7sT-_t-p3bwu3pILlOpRHHZbVX0-qyR0omLcEzSPSy21EUOu3CNKkapMpuiiWeXE4tceCAvwXck2p1A6k-jbA-g7yh5f--NeaamvKlhjm7v26IKSBfF6W8SWXLOXg_dQHtI7Xyaf9bmfjNoB-kz5jMRDt_8jzmlHytVrS5xrcwD6-ntdW_E6QELLRf9Ze8tOGxFv9qq8pnHwKSCdsfSMr6evA0AL7yraaxNgN0VcQKzuetenQVSzR4Avm3nsvyuie9j-q0IODD8_H0rz-dW1qLrm82Eva9xDQy-PNF0JgihUrfVgBuqB_A
 ```
+

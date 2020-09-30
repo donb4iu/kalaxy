@@ -1,7 +1,7 @@
 #cloud-config
 
 ## Set your hostname here, the manage_etc_hosts will update the hosts file entries as well
-hostname: k8s-worker-03
+hostname: arm64-worker-03
 manage_etc_hosts: true
 
 ## Set the locale of the system

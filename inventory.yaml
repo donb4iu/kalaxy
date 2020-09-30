@@ -1,16 +1,18 @@
 ---
 all:
   hosts:
-    k8s-master-01:
+    arm64-master-01:
       ansible_host: 192.168.2.50
-    k8s-worker-01:
+    arm64-worker-01:
       ansible_host: 192.168.2.51
-    k8s-worker-02:
+    arm64-worker-02:
       ansible_host: 192.168.2.52
-    k8s-worker-03:
+    arm64-worker-03:
       ansible_host: 192.168.2.53
-    k8s-worker-04:
+    arm64-worker-04:
       ansible_host: 192.168.2.54
+    amd64-worker-01:
+      ansible_host: 192.168.2.55
   children:
     k3s_master:
       # At most one master:
@@ -21,33 +23,40 @@ all:
     k8s_master:
       hosts:
         # Only one master!
-        k8s-master-01: {}
+        arm64-master-01: {}
     k8s_worker:
       hosts:
       # At least one worker unless there is no master:
-        k8s-worker-01: {}
-        k8s-worker-02: {}
-        k8s-worker-03: {}
-        k8s-worker-04: {}
+        arm64-worker-01: {}
+        arm64-worker-02: {}
+        arm64-worker-03: {}
+        arm64-worker-04: {}
+        amd64-worker-01: {}
     raspberry_pi:
       hosts:
-        k8s-master-01: {}
-        k8s-worker-01: {}
-        k8s-worker-02: {}
-        k8s-worker-03: {}
-        k8s-worker-04: {}
+        arm64-master-01: {}
+        arm64-worker-01: {}
+        arm64-worker-02: {}
+        arm64-worker-03: {}
+        arm64-worker-04: {}
     raspbian:
       hosts: {}
       vars:
         ansible_ssh_user: pi
         boot_directory: /boot
-    ubuntu:
+    amd64:
       hosts:
-        k8s-master-01: {}
-        k8s-worker-01: {}
-        k8s-worker-02: {}
-        k8s-worker-03: {}
-        k8s-worker-04: {}
+        amd64-worker-01: {}
+      vars:
+        ansible_ssh_user: dbuddenbaum
+        boot_directory: /boot/firmware
+    rpi4:
+      hosts:
+        arm64-master-01: {}
+        arm64-worker-01: {}
+        arm64-worker-02: {}
+        arm64-worker-03: {}
+        arm64-worker-04: {}
       vars:
         ansible_ssh_user: pi
         boot_directory: /boot/firmware

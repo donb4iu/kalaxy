@@ -1,0 +1,3 @@
+---
+ansible_become: yes
+#boot_directory: /boot
