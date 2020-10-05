@@ -17,11 +17,15 @@
 - hosts:
     - raspbian
     - ubuntu
+    - amd64
   roles:
     - debian-down
 - hosts: ubuntu
   roles:
     - ubuntu-down
+- hosts: amd64
+  roles:
+    - amd64-down
 - hosts: raspbian
   roles:
     - raspbian-down

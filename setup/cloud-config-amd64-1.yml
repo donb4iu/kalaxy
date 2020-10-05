@@ -1,7 +1,7 @@
 #cloud-config
 
 ## Set your hostname here, the manage_etc_hosts will update the hosts file entries as well
-hostname: amd64-worker-05
+hostname: amd64-worker-01
 manage_etc_hosts: true
 
 ## Set the locale of the system
@@ -41,11 +41,11 @@ write_files:
         ethernets:
           eth0:
             addresses:s in eth0.
-              - 192.168.2.55/24
+              - 192.168.2.55/16
             gateway4: 192.168.2.253
             nameservers:
               addresses:
-                - 1.1.1.1
+                - 4.4.4.4
                 - 8.8.8.8
     ## To enable WiFi network connection
     ## Note: IP allocation is dynamic and won't match the defined state a

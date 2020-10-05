@@ -1,11 +1,11 @@
 #cloud-config
 
 ## Set your hostname here, the manage_etc_hosts will update the hosts file entries as well
-hostname: arm64-worker-04
+hostname: amd64-worker-01
 manage_etc_hosts: true
 
 ## Set the locale of the system
-locale: 'en_US.utf8'
+locale: 'en_AU.UTF-8'
 
 ## Set the timezone
 ## Value of 'timezone' must exist in /usr/share/zoneinfo
@@ -40,11 +40,13 @@ write_files:
         version: 2
         ethernets:
           eth0:
-            dhcp4: false
-            addresses: [192.168.2.54/16]
+            addresses:s in eth0.
+              - 192.168.2.56/16
             gateway4: 192.168.2.253
             nameservers:
-              addresses: [8.8.8.8, 4.4.4.4]
+              addresses:
+                - 4.4.4.4
+                - 8.8.8.8
     ## To enable WiFi network connection
     ## Note: IP allocation is dynamic and won't match the defined state a
     ##       This will require manually configuring the Ansible inventory file with
