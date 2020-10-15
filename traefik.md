@@ -26,6 +26,7 @@ NOTES:
 ```
 **[15:24:05]donbuddenbaum@donbs-iMac:~/Documents/rPi4/kalaxy$** kubectl describe svc my-traefik --namespace traefik
 ```
+[22:35:22]donbuddenbaum@donbs-iMac:~/Documents/rPi4/kalaxy$ kubectl describe svc my-traefik --namespace traefik
 Name:			my-traefik
 Namespace:		traefik
 Labels:			app=traefik
@@ -37,14 +38,14 @@ Annotations:		meta.helm.sh/release-name=my-traefik
 			meta.helm.sh/release-namespace=traefik
 Selector:		app=traefik,release=my-traefik
 Type:			NodePort
-IP:			10.107.40.216
+IP:			10.96.111.221
 External IPs:		192.168.2.50
 Port:			https	443/TCP
-NodePort:		https	32188/TCP
-Endpoints:		10.244.4.3:8880
+NodePort:		https	30606/TCP
+Endpoints:		10.244.3.2:8880
 Port:			http	80/TCP
-NodePort:		http	31787/TCP
-Endpoints:		10.244.4.3:80
+NodePort:		http	31142/TCP
+Endpoints:		10.244.3.2:80
 Session Affinity:	None
 Events:			<none>
 ```
