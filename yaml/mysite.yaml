@@ -43,12 +43,14 @@ kind: Ingress
 metadata:
   name: mysite-nginx-ingress
   annotations:
-    kubernetes.io/ingress.class: "traefik"
+    kubernetes.io/ingress.class: traefik
+    traefik.frontend.rule.type: PathPrefixStrip
 spec:
   rules:
-    - http:
+    - host: donb
+      http:
         paths:
-          - path: /mysite
+          - path: /hello
             backend:
               serviceName: mysite-nginx-service
               servicePort: 80
