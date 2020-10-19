@@ -16,11 +16,13 @@
     - docker-down
 - hosts:
     - raspbian
-    - ubuntu
+    - rpi4
     - amd64
   roles:
     - debian-down
-- hosts: ubuntu
+- hosts:
+    - rpi4
+    - amd64
   roles:
     - ubuntu-down
 - hosts: amd64
