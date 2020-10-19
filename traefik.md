@@ -7,6 +7,8 @@
 - [How to Install Kubernetes Ingress (traefik) on a Raspberry Pi Cluster](https://medium.com/@geraldcroes/kubernetes-traefik-101-when-simplicity-matters-957eeede2cf8)
 
 ## Installation
+
+kubectl create ns traefik
 **[15:23:45]donbuddenbaum@donbs-iMac:~/Documents/rPi4/kalaxy$** helm install my-traefik stable/traefik --set dashboard.enabled=true,serviceType=NodePort,dashboard.domain=dashboard.traefik,rbac.enabled=true,externalIP=192.168.2.50 --namespace traefik
 ```
 WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /Users/donbuddenbaum/.kube/config
