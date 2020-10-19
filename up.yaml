@@ -8,12 +8,14 @@
 - hosts: raspbian
   roles:
     - raspbian-up
-- hosts: ubuntu
+- hosts:
+    - rpi4
+    - amd64
   roles:
     - ubuntu-up
 - hosts:
     - raspbian
-    - ubuntu
+    - rpi4
     - amd64
   roles:
     - debian-up

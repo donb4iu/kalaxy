@@ -1,21 +1,21 @@
 ---
 all:
   hosts:
-    arm64-master-01:
+    arm64-01:
       ansible_host: 192.168.2.50
-    arm64-worker-01:
+    arm64-02:
       ansible_host: 192.168.2.51
-    arm64-worker-02:
+    arm64-03:
       ansible_host: 192.168.2.52
-    arm64-worker-03:
+    arm64-04:
       ansible_host: 192.168.2.53
-    arm64-worker-04:
+    arm64-05:
       ansible_host: 192.168.2.54
-    amd64-worker-01:
+    amd64-01:
       ansible_host: 192.168.2.55
-    amd64-worker-02:
+    amd64-02:
       ansible_host: 192.168.2.56
-    amd64-worker-03:
+    amd64-03:
       ansible_host: 192.168.2.57
   children:
     k3s_master:
@@ -27,24 +27,24 @@ all:
     k8s_master:
       hosts:
         # Only one master!
-        arm64-master-01: {}
+        amd64-02: {}
     k8s_worker:
       hosts:
       # At least one worker unless there is no master:
-        arm64-worker-01: {}
-        arm64-worker-02: {}
-        arm64-worker-03: {}
-        arm64-worker-04: {}
-        amd64-worker-01: {}
-        amd64-worker-02: {}
-        amd64-worker-03: {}
+        arm64-02: {}
+        arm64-03: {}
+        arm64-04: {}
+        arm64-05: {}
+        amd64-01: {}
+        arm64-01: {}
+        amd64-03: {}
     raspberry_pi:
       hosts:
-        arm64-master-01: {}
-        arm64-worker-01: {}
-        arm64-worker-02: {}
-        arm64-worker-03: {}
-        arm64-worker-04: {}
+        arm64-01: {}
+        arm64-02: {}
+        arm64-03: {}
+        arm64-04: {}
+        arm64-05: {}
     raspbian:
       hosts: {}
       vars:
@@ -52,19 +52,19 @@ all:
         boot_directory: /boot
     amd64:
       hosts:
-        amd64-worker-01: {}
-        amd64-worker-02: {}
-        amd64-worker-03: {}
+        amd64-01: {}
+        amd64-02: {}
+        amd64-03: {}
       vars:
         ansible_ssh_user: dbuddenbaum
         boot_directory: /boot/firmware
     rpi4:
       hosts:
-        arm64-master-01: {}
-        arm64-worker-01: {}
-        arm64-worker-02: {}
-        arm64-worker-03: {}
-        arm64-worker-04: {}
+        arm64-01: {}
+        arm64-02: {}
+        arm64-03: {}
+        arm64-04: {}
+        arm64-05: {}
       vars:
         ansible_ssh_user: pi
         boot_directory: /boot/firmware
