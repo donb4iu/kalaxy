@@ -127,3 +127,30 @@ Created symlink /etc/systemd/system/timers.target.wants/log2ram-daily.timer → 
 
 
 make OPTS=--limit=amd64-worker-xx up
+
+**dbuddenbaum@arm64-master-01:~$** sudo kubeadm token create --print-join-command
+```
+W1017 21:24:48.048542 1003621 validation.go:28] Cannot validate kube-proxy config - no validator is available
+W1017 21:24:48.048690 1003621 validation.go:28] Cannot validate kubelet config - no validator is available
+kubeadm join 192.168.2.50:6443 --token 1lzi9g.q1e5iabf9ct3khwe     --discovery-token-ca-cert-hash sha256:758ae780462b33c21506c4052e4e1de8ddec35ffc167a931fa1cd6f85ff9ede3
+```
+
+**dbuddenbaum@amd64-worker-02:~$** sudo kubeadm join 192.168.2.50:6443 --token 1lzi9g.q1e5iabf9ct3khwe     --discovery-token-ca-cert-hash sha256:758ae780462b33c21506c4052e4e1de8ddec35ffc167a931fa1cd6f85ff9ede3
+``` 
+W1018 01:26:30.473800    6631 join.go:346] [preflight] WARNING: JoinControlPane.controlPlane settings will be ignored when control-plane flag is not set.
+[preflight] Running pre-flight checks
+	[WARNING IsDockerSystemdCheck]: detected "cgroupfs" as the Docker cgroup driver. The recommended driver is "systemd". Please follow the guide at https://kubernetes.io/docs/setup/cri/
+[preflight] Reading configuration from the cluster...
+[preflight] FYI: You can look at this config file with 'kubectl -n kube-system get cm kubeadm-config -oyaml'
+[kubelet-start] Downloading configuration for the kubelet from the "kubelet-config-1.17" ConfigMap in the kube-system namespace
+[kubelet-start] Writing kubelet configuration to file "/var/lib/kubelet/config.yaml"
+[kubelet-start] Writing kubelet environment file with flags to file "/var/lib/kubelet/kubeadm-flags.env"
+[kubelet-start] Starting the kubelet
+[kubelet-start] Waiting for the kubelet to perform the TLS Bootstrap...
+
+This node has joined the cluster:
+* Certificate signing request was sent to apiserver and a response was received.
+* The Kubelet was informed of the new secure connection details.
+
+Run 'kubectl get nodes' on the control-plane to see this node join the cluster.
+```
