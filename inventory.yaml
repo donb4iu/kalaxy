@@ -27,7 +27,7 @@ all:
     k8s_master:
       hosts:
         # Only one master!
-        arm64-01: {}
+        amd64-02: {}
     k8s_worker:
       hosts:
       # At least one worker unless there is no master:
@@ -36,7 +36,7 @@ all:
         arm64-04: {}
         arm64-05: {}
         amd64-01: {}
-        amd64-02: {}
+        arm64-01: {}
         amd64-03: {}
     raspberry_pi:
       hosts:
