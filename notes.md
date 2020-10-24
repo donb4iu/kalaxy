@@ -128,6 +128,10 @@ Created symlink /etc/systemd/system/timers.target.wants/log2ram-daily.timer → 
 
 make OPTS=--limit=amd64-worker-xx up
 
+[fix token](https://blog.scottlowe.org/2019/08/15/reconstructing-the-join-command-for-kubeadm/#:~:text=Be%20aware%20that%20tokens%20have,%2C%20though%2C%20generate%20another%20value.)
+
+kubeadm token create -> build/k8s-token
+
 **dbuddenbaum@arm64-master-01:~$** sudo kubeadm token create --print-join-command
 ```
 W1017 21:24:48.048542 1003621 validation.go:28] Cannot validate kube-proxy config - no validator is available
