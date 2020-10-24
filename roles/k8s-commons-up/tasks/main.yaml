@@ -51,7 +51,7 @@
     name:
       - "kubernetes-cni={{ kubernetes_cni_version }}"
       - "kubeadm={{ k8s_version }}"
-      - "kubectl={{ k8s_version }}"
+      - "kubectl={{ k8s_kubectl_version }}"
       - "kubelet={{ k8s_version }}"
     update_cache: yes
 - name: hold k8s updates
