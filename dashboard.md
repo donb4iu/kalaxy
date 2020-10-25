@@ -32,19 +32,21 @@ serviceaccount "admin-user" created
 clusterrolebinding "admin-user" configured
 ```
 
-**[18:48:55]donbuddenbaum@donbs-iMac:~/Documents/rPi4/kalaxy$** kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
+#( 10/24/20@ 4:13PM )( donbuddenbaum@donbs-iMac ):~/Documents/rPi4/kalaxy/yaml@master✗✗✗
+   kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
 ```
-Name:         admin-user-token-vsrjb
+Name:         admin-user-token-wxqpz
 Namespace:    kubernetes-dashboard
 Labels:       <none>
-Annotations:  kubernetes.io/service-account.name=admin-user
-              kubernetes.io/service-account.uid=c572d182-7ca3-4d19-800e-6a254d11f111
+Annotations:  kubernetes.io/service-account.name: admin-user
+              kubernetes.io/service-account.uid: 3018e9d5-7d59-431f-83a8-04106135b62d
 
 Type:  kubernetes.io/service-account-token
 
 Data
 ====
-ca.crt:     1025 bytes
+ca.crt:     1066 bytes
 namespace:  20 bytes
-token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IjBncmotRkpOVE1VMHRhSE4yMjU2MXNBaXlLZHdzek93VDdsd01OZDdoUDAifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLXZzcmpiIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiJjNTcyZDE4Mi03Y2EzLTRkMTktODAwZS02YTI1NGQxMWYxMTEiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZXJuZXRlcy1kYXNoYm9hcmQ6YWRtaW4tdXNlciJ9.vbZg5k4UXfgjJuaJwLyCq9xyT3J2tyHtV7Dh0N2rJQCSIgXlb3bm3jNDeTbfHE0z9MCCrycP20yT4NkGZZWrdSUSTJKJzRq-cK0drEBHuR0QAv_ywhUB3BXhLXnp5yKwWsRaW99SdtQm6EWX8HcveQ1uBTdK-kcFXLb8C4zbijJIpHHAGbQpipzxPwF9vDTsaepQzYyfxzYbKxHvSw83a4uDu7XT0FNSOqwgXc1orq95-pd93qeTWUukDxybvTeIT6vqIdIF9bWIXbfwLz7SSyPQNU6MTfHNPrWJwajfM4CBuDy-H7VjpEenvRa-c1kEiP1s_gtqqX_Jwhlrnj0p2A
+token:      eyJhbGciOiJSUzI1NiIsImtpZCI6InRsRlZoN01vS0pGSF9RY29rQXMwQ3J5WmhYUHJfWjdKTHdKZFpST0FUSlUifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLXd4cXB6Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiIzMDE4ZTlkNS03ZDU5LTQzMWYtODNhOC0wNDEwNjEzNWI2MmQiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZXJuZXRlcy1kYXNoYm9hcmQ6YWRtaW4tdXNlciJ9.gExuBwicm7I827Kyq_TsuizGYN3hVDj3giCVPNzqnXKELRQbgusKK3B9q0nEffayhekoD45arJ-ikAn2PwgkbYZlysdfv718AW1VgFTKya_OEY0KkZftIFVs8x8_ITApN43Q9eVdoVgkGubAz9UHRU8RUPCGkke2yPdMnyJHuVWFcp4vDGFeS2wevS2hAJ0r1jETMWbsu3epGXQiLq90FL2rrpxiqIbE8gXjISbHg9CcoaCUZxH5G7A7hJjEv0AmVbBoNtWU8uL9Sy3tjwRc14-2feQfvcDkZ0EfVqzyqSL0zduzfyAgODtxVfxU7ygjRKskKdmlEiWQNu1FOZp35w
+
 ```

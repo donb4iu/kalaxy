@@ -158,3 +158,8 @@ This node has joined the cluster:
 
 Run 'kubectl get nodes' on the control-plane to see this node join the cluster.
 ```
+
+# getting events from kubernetes
+
+kubectl get events --all-namespaces  --sort-by='.metadata.creationTimestamp'
+
