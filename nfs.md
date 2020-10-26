@@ -35,3 +35,39 @@ Exports list on donb-et1831:
 
 sudo mkdir -p /mnt/nfs/home
 sudo mount -v 192.168.2.112:/media/dbuddenbaum/Sabrent-2tb-nfs/nfs-server /mnt/nfs/home -o nfsvers=3
+
+
+
+## persistent volume
+
+**#( 10/26/20@ 6:32PM )( donbuddenbaum@donbs-iMac ): ~/Documents/rPi4/kalaxy/yaml@master✗✗✗** kubectl create -f nfs-pv.yaml
+```
+persistentvolume/nfs-pv created
+```
+
+## persistent volume 
+
+**#( 10/26/20@ 6:32PM )( donbuddenbaum@donbs-iMac ):~/Documents/rPi4/kalaxy/yaml@master✗✗✗** kubectl get pv
+```
+NAME     CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM   STORAGECLASS   REASON   AGE
+nfs-pv   10Gi       RWX            Recycle          Available           nfs                     3m30s
+```
+
+
+## persistent volume claim
+
+** #( 10/26/20@ 6:36PM )( donbuddenbaum@donbs-iMac ):~/Documents/rPi4/kalaxy/yaml@master✗✗✗ ** kubectl create -f nfs-pvc.yaml
+```
+persistentvolumeclaim/nfs-pvc created
+```
+
+**#( 10/26/20@ 6:38PM )( donbuddenbaum@donbs-iMac ):~/Documents/rPi4/kalaxy/yaml@master✗✗✗** kubectl get pvc nfs-pvc
+```
+NAME      STATUS   VOLUME   CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+nfs-pvc   Bound    nfs-pv   10Gi       RWX            nfs            2m6s
+```
+**#( 10/26/20@ 6:39PM )( donbuddenbaum@donbs-iMac ):~/Documents/rPi4/kalaxy/yaml@master✗✗✗** kubectl get pv nfs-pv
+```
+NAME     CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM             STORAGECLASS   REASON   AGE
+nfs-pv   10Gi       RWX            Recycle          Bound    default/nfs-pvc   nfs                     7m33s
+```

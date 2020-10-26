@@ -9,7 +9,7 @@ spec:
   accessModes:
     - ReadWriteMany
   storageClassName: nfs
-  persistentVolumeReclaimPolicy: Retain
+  persistentVolumeReclaimPolicy: Recycle
   mountOptions:
     - hard
     - nfsvers=3
