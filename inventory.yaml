@@ -45,19 +45,24 @@ all:
         arm64-03: {}
         arm64-04: {}
         arm64-05: {}
+    amd64:
+      hosts:
+        amd64-01: {}
+        amd64-02: {}
+        amd64-03: {}
     raspbian:
       hosts: {}
       vars:
         ansible_ssh_user: pi
         boot_directory: /boot
-    amd64:
+    amdC2:
       hosts:
         amd64-01: {}
         amd64-02: {}
         amd64-03: {}
       vars:
         ansible_ssh_user: dbuddenbaum
-        boot_directory: /boot/firmware
+        boot_directory: /boot
     rpi4:
       hosts:
         arm64-01: {}

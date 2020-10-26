@@ -14,15 +14,19 @@
 - hosts: all
   roles:
     - docker-down
-- hosts:
-    - raspbian
-    - rpi4
-    - amd64
+- hosts: raspbian
   roles:
     - debian-down
-- hosts:
-    - rpi4
-    - amd64
+- hosts: rpi4
+  roles:
+    - debian-down
+- hosts: amdC2
+  roles:
+    - debian-down
+- hosts: rpi4
+  roles:
+    - ubuntu-down
+- hosts: amdC2
   roles:
     - ubuntu-down
 - hosts: amd64
