@@ -159,8 +159,13 @@ This node has joined the cluster:
 Run 'kubectl get nodes' on the control-plane to see this node join the cluster.
 ```
 
-# getting events from kubernetes
+### getting events from kubernetes
 
 kubectl get events --all-namespaces  --sort-by='.metadata.creationTimestamp'
 
-# Persistent Volume
+### Persistent Volume
+
+### update secutiry fixes
+
+apt-get update
+sudo apt-get install -y --only-upgrade $( apt-get --just-print upgrade | awk 'tolower($4) ~ /.*security.*/ || tolower($5) ~ /.*security.*/ {print $2}' | sort | uniq )
