@@ -1,0 +1,120 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-rosettaathomedata
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  mountOptions:
+    - hard
+    - nfsvers=3
+  nfs:
+    server: 192.168.2.112
+    path: /media/dbuddenbaum/Sabrent-2tb-nfs/nfs-server
+    readOnly: false
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: rosettaathomedata
+  namespace: boinc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rosettaathome
+  namespace: boinc
+  labels:
+    app: rosettaathome
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rosettaathome
+  template:
+    metadata:
+      name: rosettaathome
+      namespace: boinc
+      labels:
+        app: rosettaathome
+    spec:
+      containers:
+        - name: rosettaathome
+          image: boinc/client
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: "America/New_York"
+            - name: BOINC_GUI_RPC_PASSWORD
+              value: "123"
+            - name: BOINC_CMD_LINE_OPTIONS
+              value: "--allow_remote_gui_rpc"
+          volumeMounts:
+            - mountPath: /var/lib/boinc
+              name: rosettaathomedata
+          ports:
+            - containerPort: 80
+              name: http
+              protocol: TCP
+            - containerPort: 443
+              name: https
+              protocol: TCP
+            - containerPort: 31416
+              name: manager
+              protocol: TCP
+      volumes:
+        - name: rosettaathomedata
+          persistentVolumeClaim:
+            claimName: rosettaathomedata
+  selector:
+    matchLabels:
+      app: rosettaathome
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rosettaathome
+  namespace: boinc
+spec:
+  selector:
+    app: rosettaathome
+  ports:
+    - port: 80
+      name: http
+      protocol: TCP
+    - port: 443
+      name: https
+      protocol: TCP
+    - port: 31416
+      name: manager
+      protocol: TCP
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: rosettaathome
+  namespace: boinc
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.frontend.rule.type: PathPrefixStrip
+spec:
+  rules:
+    - host: communitygrid
+      http:
+        paths:
+          - path: /boinc
+            backend:
+              serviceName: rosettaathome
+              servicePort: 80

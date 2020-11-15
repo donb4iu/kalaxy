@@ -34,7 +34,7 @@ sudo vim /etc/netplan/01-netcfg.yaml
         ethernets:
           eth0:
             dhcp4: false
-            addresses: [192.168.2.5?/24]
+            addresses: [192.168.2.5?/16]
             gateway4: 192.168.2.253
             nameservers:
               addresses: [8.8.8.8, 4.4.4.4]
@@ -71,6 +71,18 @@ sudo visudo
 
 dbuddenbaum     ALL=(ALL) NOPASSWD=ALL
 
+```
+ssh-copy-id dbuddenbaum@192.168.2.58
+```
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/Users/donbuddenbaum/.ssh/id_rsa.pub"
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+dbuddenbaum@192.168.2.58's password:
+
+Number of key(s) added:        1
+
+Now try logging into the machine, with:   "ssh 'dbuddenbaum@192.168.2.58'"
+and check to make sure that only the key(s) you wanted were added.
 ```
 **dbuddenbaum@amd64-worker-03:~$** sudo vim /etc/sysctl.d/99-kubernetes-cri.conf
 ```
@@ -169,3 +181,27 @@ kubectl get events --all-namespaces  --sort-by='.metadata.creationTimestamp'
 
 apt-get update
 sudo apt-get install -y --only-upgrade $( apt-get --just-print upgrade | awk 'tolower($4) ~ /.*security.*/ || tolower($5) ~ /.*security.*/ {print $2}' | sort | uniq )
+
+
+
+
+###cgroups for intel
+
+One aspect I want to point out is setting the cgroup for use by kubeadm. If you choose to use Docker as your container runtime, you should set it to use the cgroup systemd rather than cgroupfs as explained [here](https://www.linkedin.com/pulse/set-up-kubernetes-your-home-lab-gregory-grubbs).
+
+In /etc/docker/daemon.conf
+```
+  {
+    "exec-opts": ["native.cgroupdriver=systemd"],
+    "log-driver": "json-file",
+    "log-opts": {
+      "max-size": "100m"
+    },
+    "storage-driver": "overlay2"
+  }
+```
+Then reload
+```
+  sudo systemctl daemon-reload
+  sudo systemctl restart docker
+```
