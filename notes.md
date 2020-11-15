@@ -57,15 +57,16 @@ sudo vim /etc/netplan/01-netcfg.yaml
 ```
 - sudo reboot
 
+or
+
+- sudo poweroff
+
+
 ### update/upgrade
 
 - sudo apt-get update
 - sudo apt update
 - sudo apt upgrade
-
-or
-
-- sudo poweroff
 
 ### SUDO
 
