@@ -62,6 +62,8 @@ sudo vim /etc/netplan/01-netcfg.yaml
 - sudo apt-get update
 - sudo apt update
 - sudo apt upgrade
+or
+- sudo poweroff
 
 ### SUDO
 
