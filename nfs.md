@@ -2,6 +2,7 @@
 - [Turn your Raspberry Pi homelab into a network filesystem](https://opensource.com/article/20/5/nfs-raspberry-pi)
 - [How To Set Up an NFS Mount on Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-ubuntu-20-04)
 - [macOS X Mount NFS Share / Set an NFS Client](https://www.cyberciti.biz/faq/apple-mac-osx-nfs-mount-command-tutorial/)
+- [Dynamic NFS Provisioning in Kubernetes](https://blog.exxactcorp.com/deploying-dynamic-nfs-provisioning-in-kubernetes/)
 ## ubuntu server
 
 - sudo apt update
@@ -11,16 +12,23 @@
 
 **dbuddenbaum@DONB-ET1831:/media/dbuddenbaum/Sabrent-2tb-nfs$** sudo vi  /etc/exports
 ```
-/media/dbuddenbaum/Sabrent-2tb-nfs/nfs-server *(rw,sync,no_subtree_check)
+/media/dbuddenbaum/Sabrent-2tb-nfs/nfs-server *(rw,sync,no_subtree_check,no_root_squash,no_all_squash,insecure,anonuid=1000,anongid=1000)
 
 ```
 -  sudo systemctl restart nfs-server.service
 
 ## mac osx client
 
+**#( 11/16/20@ 1:53AM )( dbuddenbaum@dbuddenbaum-mbp ):~**
+mkdir ~/nfs-dir
+
+**#( 11/16/20@ 1:53AM )( dbuddenbaum@dbuddenbaum-mbp ):~**
+mount -t nfs 192.168.2.112:/media/dbuddenbaum/Sabrent-2tb-nfs/nfs-server ~/nfs-dir
+
+**#( 11/16/20@ 1:53AM )( dbuddenbaum@dbuddenbaum-mbp ):~**
+   ls nfs-dir
 ```
-sudo mkdir /private/nfs
-sudo mount -t nfs -o resvport,rw DONB-ET1831:/media/dbuddenbaum/Sabrent-2tb-nfs/nfs-server /private/nfs
+lost+found nfs-server
 
 ```
 
@@ -70,4 +78,13 @@ nfs-pvc   Bound    nfs-pv   10Gi       RWX            nfs            2m6s
 ```
 NAME     CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM             STORAGECLASS   REASON   AGE
 nfs-pv   10Gi       RWX            Recycle          Bound    default/nfs-pvc   nfs                     7m33s
+```
+
+## mount commands
+
+**#( 11/16/20@12:43AM )( dbuddenbaum@dbuddenbaum-mbp ):~**
+   showmount -e 192.168.2.112
+```
+Exports list on 192.168.2.112:
+/media/dbuddenbaum/Sabrent-2tb-nfs/nfs-server *
 ```

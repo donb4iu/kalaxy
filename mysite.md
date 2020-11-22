@@ -15,4 +15,4 @@ ingress "mysite-nginx-ingress" created
 ```
 
 
-http://donb/hello
+[hello](http://donb/hello)

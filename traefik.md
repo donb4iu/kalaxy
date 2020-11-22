@@ -1,12 +1,14 @@
 # Traefik
 
-![traefik](images/traeficdashboard.png)
+![traefik](../kalaxy_lfs_issue/images/traeficdashboard.png)
 
-## Reference
+## traefik alone
+
+### Reference
 - [Deploying Traefik as Ingress Controller for Your Kubernetes Cluster](https://medium.com/kubernetes-tutorials/deploying-traefik-as-ingress-controller-for-your-kubernetes-cluster-b03a0672ae0c)
 - [How to Install Kubernetes Ingress (traefik) on a Raspberry Pi Cluster](https://medium.com/@geraldcroes/kubernetes-traefik-101-when-simplicity-matters-957eeede2cf8)
 
-## Installation
+### Installation
 
 **#( 10/26/20@ 6:54PM )( donbuddenbaum@donbs-iMac ):~/Documents/rPi4/kalaxy@master✗✗✗** kubectl create ns traefik
 ```
@@ -82,10 +84,10 @@ Events:            <none>
 **/etc/hosts** 192.168.2.50 dashboard.traefik
 
 
-## uninstall
+### uninstall
 helm uninstall mytraefik -n traefik
 
-## examples
+### examples
 
 **[16:28:27]donbuddenbaum@donbs-iMac:~/Documents/rPi4/kalaxy/deployments$** kubectl create -f animals-deployments.yaml --validate=false
 ```
@@ -104,9 +106,10 @@ service "hare" created
 ingress "animals" created
 ```
 
-## Urls
-- http://dashboard.traefik:31295/dashboard/
-- http://animals.traefik:31295/moose/
-- http://animals.traefik:31295/bear/
-- http://animals.traefik:31295/hare/
+### Urls for examples
+- [dashboard](http://dashboard.traefik:31295/dashboard/)
+- [moose](http://animals.traefik:31295/moose/)
+- [bear](http://animals.traefik:31295/bear/)
+- [hare](http://animals.traefik:31295/hare/)
+ 
  

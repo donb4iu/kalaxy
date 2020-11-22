@@ -11,7 +11,7 @@ sudo apt-get update && sudo apt-get install htop -y
 xcode-select --install
 ```
 
-![clusterUp](images/cluster-initial-up.png)
+![clusterUp](../kalaxy_lfs_issue/images/cluster-initial-up.png)
 
 ## Flash
 
@@ -64,9 +64,11 @@ or
 
 ### update/upgrade
 
-- sudo apt-get update
-- sudo apt update
-- sudo apt upgrade
+sudo apt-get update
+
+sudo apt update
+
+sudo apt upgrade
 
 ### SUDO
 
@@ -77,6 +79,12 @@ sudo visudo
 dbuddenbaum     ALL=(ALL) NOPASSWD=ALL
 
 ```
+<<<<<<< HEAD
+## Copy Id
+ssh-copy-id pi@$ip_address 
+
+
+=======
 ssh-copy-id dbuddenbaum@192.168.2.58
 ```
 /usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/Users/donbuddenbaum/.ssh/id_rsa.pub"
@@ -89,6 +97,7 @@ Number of key(s) added:        1
 Now try logging into the machine, with:   "ssh 'dbuddenbaum@192.168.2.58'"
 and check to make sure that only the key(s) you wanted were added.
 ```
+>>>>>>> 38d6a03510f3dafb5c27383383689baf396cd5ce
 **dbuddenbaum@amd64-worker-03:~$** sudo vim /etc/sysctl.d/99-kubernetes-cri.conf
 ```
 net.bridge.bridge-nf-call-iptables=1
