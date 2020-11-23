@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kube-ops-view
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.frontend.rule.type: PathPrefixStrip
+spec:
+  rules:
+  - host: donb-k8s
+    http:
+      paths:
+        - path: /visualizer
+          backend:
+            serviceName: kube-ops-view
+            servicePort: 80

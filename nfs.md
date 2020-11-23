@@ -88,3 +88,62 @@ nfs-pv   10Gi       RWX            Recycle          Bound    default/nfs-pvc   n
 Exports list on 192.168.2.112:
 /media/dbuddenbaum/Sabrent-2tb-nfs/nfs-server *
 ```
+
+## storage logs 
+
+**#( 11/23/20@12:49AM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml@master✗✗✗**
+  
+   kubectl logs -f nfs-client-provisioner-8cbd9d67c-svl2d -n nfs-storage
+   
+```
+I1116 17:21:41.038864       1 leaderelection.go:185] attempting to acquire leader lease  nfs-storage/nfs-provisioner-nfs-ssd1...
+I1116 17:21:41.050908       1 leaderelection.go:194] successfully acquired lease nfs-storage/nfs-provisioner-nfs-ssd1
+I1116 17:21:41.051718       1 controller.go:631] Starting provisioner controller nfs-provisioner/nfs-ssd1_nfs-client-provisioner-8cbd9d67c-svl2d_30fd60f6-2830-11eb-8250-9af622c5b843!
+I1116 17:21:41.051778       1 event.go:221] Event(v1.ObjectReference{Kind:"Endpoints", Namespace:"nfs-storage", Name:"nfs-provisioner-nfs-ssd1", UID:"a7601751-1136-4424-bd05-c263d481da65", APIVersion:"v1", ResourceVersion:"5569734", FieldPath:""}): type: 'Normal' reason: 'LeaderElection' nfs-client-provisioner-8cbd9d67c-svl2d_30fd60f6-2830-11eb-8250-9af622c5b843 became leader
+I1116 17:21:41.151948       1 controller.go:680] Started provisioner controller nfs-provisioner/nfs-ssd1_nfs-client-provisioner-8cbd9d67c-svl2d_30fd60f6-2830-11eb-8250-9af622c5b843!
+```
+
+## Service accounts and cluster roles
+
+**#( 11/23/20@ 1:36AM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml@master✗✗✗**
+
+   kubectl describe sa -n nfs-storage
+
+```
+Name:                default
+Namespace:           nfs-storage
+Labels:              <none>
+Annotations:         <none>
+Image pull secrets:  <none>
+Mountable secrets:   default-token-nwz62
+Tokens:              default-token-nwz62
+Events:              <none>
+
+
+Name:                nfs-client-provisioner
+Namespace:           nfs-storage
+Labels:              <none>
+Annotations:         kubectl.kubernetes.io/last-applied-configuration:
+                       {"apiVersion":"v1","kind":"ServiceAccount","metadata":{"annotations":{},"name":"nfs-client-provisioner","namespace":"nfs-storage"}}
+Image pull secrets:  <none>
+Mountable secrets:   nfs-client-provisioner-token-8cjn8
+Tokens:              nfs-client-provisioner-token-8cjn8
+Events:              <none>
+```
+
+**#( 11/23/20@ 1:39AM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml@master✗✗✗**
+    kubectl describe clusterrole nfs-client-provisioner
+    
+```
+Name:         nfs-client-provisioner-runner
+Labels:       <none>
+Annotations:  kubectl.kubernetes.io/last-applied-configuration:
+                {"apiVersion":"rbac.authorization.k8s.io/v1","kind":"ClusterRole","metadata":{"annotations":{},"name":"nfs-client-provisioner-runner"},"ru...
+PolicyRule:
+  Resources                      Non-Resource URLs  Resource Names  Verbs
+  ---------                      -----------------  --------------  -----
+  events                         []                 []              [create update patch]
+  persistentvolumes              []                 []              [get list watch create delete]
+  persistentvolumeclaims         []                 []              [get list watch update]
+  storageclasses.storage.k8s.io  []                 []              [get list watch]
+```
