@@ -41,6 +41,10 @@ Exports list on donb-et1831:
 
 ## unbuntu 20.04 client
 
+sudo apt update
+sudo apt install nfs-common
+
+
 sudo mkdir -p /mnt/nfs/home
 sudo mount -v 192.168.2.112:/media/dbuddenbaum/Sabrent-2tb-nfs/nfs-server /mnt/nfs/home -o nfsvers=3
 

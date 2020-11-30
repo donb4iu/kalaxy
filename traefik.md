@@ -2,6 +2,8 @@
 
 ![traefik](images/traeficdashboard.png)
 
+[k8s-code/ingress](https://github.com/initcron/k8s-code/tree/master/ingress)
+
 ## Manual 
 
 [deploy](https://medium.com/kubernetes-tutorials/deploying-traefik-as-ingress-controller-for-your-kubernetes-cluster-b03a0672ae0c)

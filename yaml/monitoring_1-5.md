@@ -5,7 +5,7 @@
 - [Deploying multiple Traefik Ingresses with LetsEncrypt HTTPS certificates on Kubernetes](https://medium.com/@carlosedp/multiple-traefik-ingresses-with-letsencrypt-https-certificates-on-kubernetes-b590550280cf)
 - [Install a Kubernetes load balancer on your Raspberry Pi homelab with MetalLB](https://opensource.com/article/20/7/homelab-metallb?utm_campaign=intrel)
 - [Using MetalLB And Traefik Load Balancing For Your Bare Metal Kubernetes Cluster – Part 1](https://www.devtech101.com/2019/02/23/using-metallb-and-traefik-load-balancing-for-your-bare-metal-kubernetes-cluster-part-1/)
-
+- [Kubernetes Metal LB for On-Prem / BareMetal Cluster in 10 minutes](https://medium.com/@JockDaRock/kubernetes-metal-lb-for-on-prem-baremetal-cluster-in-10-minutes-c2eaeb3fe813)
 
 ## traefik and metallb
 https://github.com/kubernetes-retired/external-storage/blob/master/nfs-client/deploy/deployment-arm.yaml
@@ -40,6 +40,34 @@ namespace/metallb-system created
 ```   
 configmap/config created
 ```
+
+**#( 11/24/20@ 1:51AM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/1-MetalLB@master✗✗✗**
+
+   helm install metallb --namespace=metallb-system -f metallb-conf.yaml stable/metallb
+
+```
+WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /Users/dbuddenbaum/.kube/config
+WARNING: Kubernetes configuration file is world-readable. This is insecure. Location: /Users/dbuddenbaum/.kube/config
+WARNING: This chart is deprecated
+NAME: metallb
+LAST DEPLOYED: Tue Nov 24 01:51:59 2020
+NAMESPACE: metallb-system
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+############################################################
+####          WARNING: This chart is deprecated         ####
+############################################################
+
+MetalLB is now running in the cluster.
+WARNING: you specified a ConfigMap that isn't managed by
+Helm. LoadBalancer services will not function until you add that
+ConfigMap to your cluster yourself.
+
+```
+
+
 **#( 11/11/20@ 1:01AM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml@master✗✗✗**
    cd 2-Traefik
 

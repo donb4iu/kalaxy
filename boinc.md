@@ -2,6 +2,7 @@
 
 
 [Folding@Home on Kubernetes](https://justin.palpant.us/folding-home-on-kubernetes/)
+
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/jaysgrant/kubernetes_boinc_client_setup)
 
 This project provides baseline manifests to setup the BOINC computing client on Kubernetes. This evolved from my experimetntation of wanting to run it at home, and contribute to the Rosetta@Home project.
@@ -18,6 +19,18 @@ My Kubernetes instance uses [MetalLB](https://github.com/metallb/metallb) for lo
 
 ## Getting Started ##
 
+boinc-on-k8
+===========
+
+### What:   
+Donate extra cpu cycles to charity with Kubernetes, Docker and boinc.
+
+### tldr:
+
+kubectl create -f boinc-rc.yml 
+kubectl scale rc boinc-workers --replicas=3 -n community-grid
+kubectl delete -f boinc-rc.yml 
+
 ### Requirements ###
 
 The requirements for this project are simple. All you need is a functional Kubernetes setup.
@@ -28,7 +41,8 @@ The non GPU setup is the easiest to run. Open **boinc_k8s/boinc_client_non_gpu.y
 1. If you are using the MetalLB L2 configuration, add the name of your pool.
     * If you prefer Nodeport, or ClusterIP setups, edit the service as appropriate.
     * Example of the service in its defaults is here:
-    ```yaml
+    ```
+    yaml
     ---
     apiVersion: v1
     kind: Service

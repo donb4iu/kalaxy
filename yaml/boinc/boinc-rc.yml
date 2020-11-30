@@ -1,0 +1,47 @@
+### Running Boinc on Kubernetes
+# 
+# This is the replication controller yaml file
+# for strating up some boinc worker nodes in 
+# kubernetes. 
+#
+# Find out more about boinc here: https://boinc.berkeley.edu/
+#
+# To use this, please:
+#
+# 1) Make sure you have a kubernetes cluster somewhere
+# 2) create an account at www.worldcommunitygrid.org and grab the and create yourself an acocunt. 
+# 3) Grab the 'account key' from the settings/my profile UI path and insert the key below. 
+# 4) Spin up some boinc works in your k8 clusters by running something like:
+# -- > kubectl create -f boince-rc.yml 
+#
+
+
+
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: boinc-workers
+  namespace: community-grid
+spec:
+  selector:
+    name: boinc-workers
+    version: v1
+  template:
+    metadata:
+      labels:
+        name: boinc-workers
+        version: v1
+        priority: charity
+    spec:
+      containers:
+      - image: ckleban/boinc-on-k8
+        name: boinc-workers
+        #args: ["-attach_project", <BoincProjectServer>, <Account Key>]
+        args: ["-attach_project", "www.worldcommunitygrid.org", "66a7be56ce6804b494c1fac72dd283bf"]
+        resources:
+              limits:
+                cpu: "1"
+              requests:
+                cpu: "0.5"
+      nodeSelector:
+        kubernetes.io/arch: amd64

@@ -47,7 +47,7 @@ metadata:
     traefik.frontend.rule.type: PathPrefixStrip
 spec:
   rules:
-    - host: donb
+    - host: donb-k8s
       http:
         paths:
           - path: /hello

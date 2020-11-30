@@ -14,5 +14,10 @@ service "mysite-nginx-service" created
 ingress "mysite-nginx-ingress" created
 ```
 
+**#( 11/29/20@ 7:46PM )( dbuddenbaum@dbuddenbaum-mbp ):/private/etc**
+   
+   sudo vim hosts
+   
+   192.168.2.20 donb-k8s
 
-[hello](http://donb/hello)
+[hello](http://donb-k8s/hello)
