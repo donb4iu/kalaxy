@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: rosettaathomedata
-  namespace: boinc
+  namespace: community-grid
 spec:
   accessModes:
     - ReadWriteOnce
@@ -15,7 +15,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: rosettaathome
-  namespace: boinc
+  namespace: community-grid
   labels:
     app: rosettaathome
 spec:
@@ -23,13 +23,13 @@ spec:
   template:
     metadata:
       name: rosettaathome
-      namespace: boinc
+      namespace: community-grid
       labels:
         app: rosettaathome
     spec:
       containers:
         - name: rosettaathome
-          image: boinc/client
+          image: boinc/client:arm64v8
           imagePullPolicy: Always
           env:
             - name: TZ
@@ -51,6 +51,8 @@ spec:
             - containerPort: 31416
               name: manager
               protocol: TCP
+      nodeSelector:
+              kubernetes.io/arch: arm64
       volumes:
         - name: rosettaathomedata
           persistentVolumeClaim:
@@ -63,9 +65,9 @@ apiVersion: v1
 kind: Service
 metadata:
   name: rosettaathome
-  namespace: boinc
+  namespace: community-grid
   annotations:
-    metallb.universe.tf/address-pool: #Replace this comment with your MetalLB Pool Name
+    metallb.universe.tf/address-pool: default
 spec:
   selector:
     app: rosettaathome

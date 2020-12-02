@@ -67,7 +67,7 @@ The non GPU setup is the easiest to run. Open **boinc_k8s/boinc_client_non_gpu.y
       type: LoadBalancer
     ```
 1. Once the needed edits are made, from your terminal run:
-    ```sh
+    ```
     kubectl apply -f boinc_k8s/boinc_client_non_gpu.yaml
     ```
 1. Thsi will create a the service, PVC, and deployment with a single running pod. The pod can be connected to via BOINC manager for further configuration.
