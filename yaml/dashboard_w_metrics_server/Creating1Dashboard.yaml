@@ -29,8 +29,8 @@ metadata:
 
 ---
 
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
   labels:
     k8s-app: kubernetes-dashboard
@@ -39,9 +39,11 @@ metadata:
 spec:
   ports:
     - port: 443
+      protocol: TCP
       targetPort: 8443
   selector:
     k8s-app: kubernetes-dashboard
+  type: LoadBalancer
 
 ---
 
@@ -230,22 +232,6 @@ spec:
       tolerations:
         - key: node-role.kubernetes.io/master
           effect: NoSchedule
-
----
-
-kind: Service
-apiVersion: v1
-metadata:
-  labels:
-    k8s-app: dashboard-metrics-scraper
-  name: dashboard-metrics-scraper
-  namespace: kubernetes-dashboard
-spec:
-  ports:
-    - port: 8000
-      targetPort: 8000
-  selector:
-    k8s-app: dashboard-metrics-scraper
 
 ---
 

@@ -1,5 +1,7 @@
 # Installation Notes
 
+[Build Bare Metal Kubernetes Dualstack Calico Metallb RaspberryPI 4 Ubuntu Server 64bit. (64bit required!!!)](https://github.com/Trackhe/Raspberry64bitKubernetesServerDualstack)
+
 ## Raspberry Pi Monitoring
 
 ```

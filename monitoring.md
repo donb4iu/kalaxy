@@ -1,5 +1,6 @@
 # Monitoring
 
+[Monitoring and Alerting on your Kubernetes Cluster with Prometheus and Grafana](https://gregoiredayet.medium.com/monitoring-and-alerting-on-your-kubernetes-cluster-with-prometheus-and-grafana-55e4b427b22d)
 
 ## Prometheus
 helm repo add stable https://kubernetes-charts.storage.googleapis.com

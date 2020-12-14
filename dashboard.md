@@ -5,6 +5,8 @@
 
 ## [Dashboard](https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md)
 
+**kubectl apply --filename https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta4/aio/deploy/recommended.yaml**
+
 **[18:39:42]donbuddenbaum@donbs-iMac:~/Documents/rPi4/kalaxy$** kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-rc7/aio/deploy/recommended.yaml --validate=false
 ```
 namespace "kubernetes-dashboard" created
@@ -34,19 +36,20 @@ clusterrolebinding "admin-user" configured
 
 **#( 10/24/20@ 4:13PM )( donbuddenbaum@donbs-iMac ):~/Documents/rPi4/kalaxy/yaml@master✗✗✗**  kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
 ```
-Name:         admin-user-token-5vf6v
-Namespace:    kubernetes-dashboard
+Name:         admin-user-token-p28gh
+Namespace:    kube-system
 Labels:       <none>
 Annotations:  kubernetes.io/service-account.name: admin-user
-              kubernetes.io/service-account.uid: 000195ce-772f-4a5b-85d7-2afdddfe7bb7
+              kubernetes.io/service-account.uid: 40fb41c7-8314-4eec-8128-0d69089a4ad2
 
 Type:  kubernetes.io/service-account-token
 
 Data
 ====
 ca.crt:     1025 bytes
-namespace:  20 bytes
-token:      eyJhbGciOiJSUzI1NiIsImtpZCI6ImstVk1XSWdsMXlLTWNyYzhncmY4SzU3WkVpYWVpZnRiTW96UGlUUHlmMHcifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLTV2ZjZ2Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiIwMDAxOTVjZS03NzJmLTRhNWItODVkNy0yYWZkZGRmZTdiYjciLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZXJuZXRlcy1kYXNoYm9hcmQ6YWRtaW4tdXNlciJ9.RdMzhkLOff7bm2ssZ9Grcg0r8SJlRUhD50LZNr2WUUK0wByNleBP5163Jiy7Gc5P11inObt2PPpdMRClUr_q7qY-Ua2gts4VU-7CZajaimye01mPO_PJgLTKy7ov3H9OqFdWDnqYCHV2ivfI9Y51D8OJL5jR8seDkfC11H1_DLwiutzKWVvHlRkq7AGU47QhIJAxqKQxpdyp3oJn0r-MdvNttN8jXAnKzeZMnURv1GEdxI5XG6eilQ_zt-DGLAAIyEqXAfR9DmUa7voUiTmqAvH-v952eJS-P78Pu2MxaYfa05mQMHGOTNkXkl8Bd70u_hLzYoHcKETdwSlw5iyrrw
+namespace:  11 bytes
+token:      eyJhbGciOiJSUzI1NiIsImtpZCI6ImstVk1XSWdsMXlLTWNyYzhncmY4SzU3WkVpYWVpZnRiTW96UGlUUHlmMHcifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLXAyOGdoIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI0MGZiNDFjNy04MzE0LTRlZWMtODEyOC0wZDY5MDg5YTRhZDIiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZS1zeXN0ZW06YWRtaW4tdXNlciJ9.OTCxlQvopHbCLMRkOgLc_RtVwEFLgKgV_76MzLe-jHbu84LN9hNe1uVq-GVtxTUG_0wIpVzeEpXtnvsDpBI9j1Li_kAUaDpwbq8nY2gNvteU2dP5IFAXzHWUX3OHwW8CDQ18OrwUPxdxGWwyJJbE7Jkb6jHOsDiV4D5xEJZeyhbUq637BYRbVDpj0VMQ5fihD-IZOaUmfFoyl7sRCPzcoIGkwWEkEXq7WicwQctpkovGWrY-Q1NxlNg8URz2y632ZZ-ZiVaV18Hxr3BdpazFmFGi1YPTZZ4gRx8T3f3DksN76PizAqbUyTpr3Yub8066Q6xN0BgnpIPcxIONUeYnyw
+
 ```
 
 [Kubernetes Dashboard Adjusting the timeout of the Kubernetes Dashboard](https://blinkeye.github.io/post/public/2019-05-30-kubernetes-dashboard/)
@@ -104,9 +107,21 @@ Data
 ca.crt:     1025 bytes
 namespace:  11 bytes
 token:      eyJhbGciOiJSUzI1NiIsImtpZCI6ImstVk1XSWdsMXlLTWNyYzhncmY4SzU3WkVpYWVpZnRiTW96UGlUUHlmMHcifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLTI1bGtjIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiIyNDM5ZjljYi02NThlLTQ4NDEtOTJmOC01NzQ2N2NlMjNiZjgiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZS1zeXN0ZW06YWRtaW4tdXNlciJ9.b6OLgFnl4qxYz0ScDvO_-65bj80oH6_4HnLHD9y6IS2mzVCIaaMcPgltbzuhEoxX1Udnj5hMNeRXA6mcfkliIsWfh8Kk8MdIazbYxuaeNJAlzHga1ki6kkQBIBAJQ9HJ0ZMZrkx6WQsHy5PpOb-Rm_hInGjKc-fmE6jTC1egM6MBtBhgCxUJrcgkZdnsE1uX-tTHTEGQhHezJ6lNs6HolaONN4CiM4v6IViAqSaLCDX4FUEarzOdEzBur8fWedkX0QVcM1mIbT2z7nm6pKNik9bcIB1GvIUz7w1Zd6Aoh6sZ3owYW66tgH4XpcVCNApxhEx3NWXGuHTZwBehSUtg3w```
+
 ```
-
-
+**#( 12/11/20@ 2:47AM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/4-Dashboard@master✗✗✗**
+   kubectl create -f heapster.yaml
+```
+serviceaccount/heapster created
+deployment.apps/heapster created
+service/heapster created
+clusterrolebinding.rbac.authorization.k8s.io/heapster created
+```
+**#( 12/11/20@ 2:47AM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/4-Dashboard@master✗✗✗**
+   kubectl edit clusterrole system:heapster
+```
+clusterrole.rbac.authorization.k8s.io/system:heapster edited
+```
 ## reference
 [Expose your Kubernetes Dashboard using a LoadBalancer](https://github.com/alexandreroman/k8s-dashboard-loadbalancer)
 [Bare metal load balancer on Kubernetes with MetalLB ](https://dev.to/drazisil/bare-metal-load-balancer-on-kubernetes-with-metallb-3h2k)
