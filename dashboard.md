@@ -48,8 +48,7 @@ Data
 ====
 ca.crt:     1025 bytes
 namespace:  11 bytes
-token:      eyJhbGciOiJSUzI1NiIsImtpZCI6ImstVk1XSWdsMXlLTWNyYzhncmY4SzU3WkVpYWVpZnRiTW96UGlUUHlmMHcifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLXAyOGdoIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI0MGZiNDFjNy04MzE0LTRlZWMtODEyOC0wZDY5MDg5YTRhZDIiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZS1zeXN0ZW06YWRtaW4tdXNlciJ9.OTCxlQvopHbCLMRkOgLc_RtVwEFLgKgV_76MzLe-jHbu84LN9hNe1uVq-GVtxTUG_0wIpVzeEpXtnvsDpBI9j1Li_kAUaDpwbq8nY2gNvteU2dP5IFAXzHWUX3OHwW8CDQ18OrwUPxdxGWwyJJbE7Jkb6jHOsDiV4D5xEJZeyhbUq637BYRbVDpj0VMQ5fihD-IZOaUmfFoyl7sRCPzcoIGkwWEkEXq7WicwQctpkovGWrY-Q1NxlNg8URz2y632ZZ-ZiVaV18Hxr3BdpazFmFGi1YPTZZ4gRx8T3f3DksN76PizAqbUyTpr3Yub8066Q6xN0BgnpIPcxIONUeYnyw
-
+token:      eyJhbGciOiJSUzI1NiIsImtpZCI6ImstVk1XSWdsMXlLTWNyYzhncmY4SzU3WkVpYWVpZnRiTW96UGlUUHlmMHcifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLWc0Mm5zIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI4Mzc2YzI1Ni1kOTIxLTQ4NDgtOTQwNC1hZGNhYTgyMWJkMWIiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZS1zeXN0ZW06YWRtaW4tdXNlciJ9.xYK9ZQnLSabsZPvafWXEdsXDfP4pFSWS_tJyj4m04akWdFTPVcfYkfjpvIJG1qVW1k9QuRqrNAhKCHASCePkusv7yWoOaflzO5FlEQfj_bPjD95HZNs3rDGNmMu0iTxDzV34UqrGXtmPKNuiXIjZFWIQfdiadXGOm7FoPpH-X0JAvavutHEoifSa9KK1RM4h3ko1N2UzU5tGGTUZQrYlgmcpoUYMRy7NWk1hwKNxCSm9S7QDLnC7RUKi0R0tKj4Zf8ZT_tRZpi7uCxgi9NYRmHv7RUoyAQCEftaNicNio-MgvA9QvDLsskYfe0oSede8bZePrCcgtQdqoAR2X02yMQ
 ```
 
 [Kubernetes Dashboard Adjusting the timeout of the Kubernetes Dashboard](https://blinkeye.github.io/post/public/2019-05-30-kubernetes-dashboard/)
@@ -94,19 +93,19 @@ clusterrolebinding.rbac.authorization.k8s.io/admin-user created
   
    kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
 ```
-Name:         admin-user-token-25lkc
+Name:         admin-user-token-g42ns
 Namespace:    kube-system
 Labels:       <none>
 Annotations:  kubernetes.io/service-account.name: admin-user
-              kubernetes.io/service-account.uid: 2439f9cb-658e-4841-92f8-57467ce23bf8
+              kubernetes.io/service-account.uid: 8376c256-d921-4848-9404-adcaa821bd1b
 
 Type:  kubernetes.io/service-account-token
 
 Data
 ====
+token:      eyJhbGciOiJSUzI1NiIsImtpZCI6ImstVk1XSWdsMXlLTWNyYzhncmY4SzU3WkVpYWVpZnRiTW96UGlUUHlmMHcifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLWc0Mm5zIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI4Mzc2YzI1Ni1kOTIxLTQ4NDgtOTQwNC1hZGNhYTgyMWJkMWIiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZS1zeXN0ZW06YWRtaW4tdXNlciJ9.xYK9ZQnLSabsZPvafWXEdsXDfP4pFSWS_tJyj4m04akWdFTPVcfYkfjpvIJG1qVW1k9QuRqrNAhKCHASCePkusv7yWoOaflzO5FlEQfj_bPjD95HZNs3rDGNmMu0iTxDzV34UqrGXtmPKNuiXIjZFWIQfdiadXGOm7FoPpH-X0JAvavutHEoifSa9KK1RM4h3ko1N2UzU5tGGTUZQrYlgmcpoUYMRy7NWk1hwKNxCSm9S7QDLnC7RUKi0R0tKj4Zf8ZT_tRZpi7uCxgi9NYRmHv7RUoyAQCEftaNicNio-MgvA9QvDLsskYfe0oSede8bZePrCcgtQdqoAR2X02yMQ
 ca.crt:     1025 bytes
 namespace:  11 bytes
-token:      eyJhbGciOiJSUzI1NiIsImtpZCI6ImstVk1XSWdsMXlLTWNyYzhncmY4SzU3WkVpYWVpZnRiTW96UGlUUHlmMHcifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLTI1bGtjIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiIyNDM5ZjljYi02NThlLTQ4NDEtOTJmOC01NzQ2N2NlMjNiZjgiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZS1zeXN0ZW06YWRtaW4tdXNlciJ9.b6OLgFnl4qxYz0ScDvO_-65bj80oH6_4HnLHD9y6IS2mzVCIaaMcPgltbzuhEoxX1Udnj5hMNeRXA6mcfkliIsWfh8Kk8MdIazbYxuaeNJAlzHga1ki6kkQBIBAJQ9HJ0ZMZrkx6WQsHy5PpOb-Rm_hInGjKc-fmE6jTC1egM6MBtBhgCxUJrcgkZdnsE1uX-tTHTEGQhHezJ6lNs6HolaONN4CiM4v6IViAqSaLCDX4FUEarzOdEzBur8fWedkX0QVcM1mIbT2z7nm6pKNik9bcIB1GvIUz7w1Zd6Aoh6sZ3owYW66tgH4XpcVCNApxhEx3NWXGuHTZwBehSUtg3w```
 
 ```
 **#( 12/11/20@ 2:47AM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/4-Dashboard@master✗✗✗**
@@ -134,7 +133,7 @@ clusterrole.rbac.authorization.k8s.io/system:heapster edited
 [https://blog.heptio.com/on-securing-the-kubernetes-dashboard-16b09b1b7aca](https://blog.heptio.com/on-securing-the-kubernetes-dashboard-16b09b1b7aca
 )
 
-
+```
 #( 12/04/20@ 4:03AM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4
    openssl req -nodes -newkey rsa:2048 -keyout certs/dashboard.key -out certs/dashboard.csr -subj "/C=/ST=/L=/O=/OU=/CN=kubernetes-dashboard"
 Generating a 2048 bit RSA private key
@@ -175,3 +174,7 @@ secret/kubernetes-dashboard-certs created
 
 pod "kubernetes-dashboard-64999dbccd-6pdlc" deleted
 #( 12/04/20@ 4:09AM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/certs
+
+```
+
+[The Ultimate Guide to the Kubernetes Dashboard: How to Install and Integrate Metrics-server](https://www.replex.io/blog/the-ultimate-guide-to-the-kubernetes-dashboard-how-to-install-and-integrate-metrics-server)
