@@ -108,73 +108,24 @@ ca.crt:     1025 bytes
 namespace:  11 bytes
 
 ```
-**#( 12/11/20@ 2:47AM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/4-Dashboard@master✗✗✗**
-   kubectl create -f heapster.yaml
-```
-serviceaccount/heapster created
-deployment.apps/heapster created
-service/heapster created
-clusterrolebinding.rbac.authorization.k8s.io/heapster created
-```
-**#( 12/11/20@ 2:47AM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/4-Dashboard@master✗✗✗**
-   kubectl edit clusterrole system:heapster
-```
-clusterrole.rbac.authorization.k8s.io/system:heapster edited
-```
+
+**#( 12/11/20@ 2:19AM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/4-Dashboard@master✗✗✗**
+
+kubectl create -f metrics-scrapper.yaml
+
+
+
 ## reference
-[Expose your Kubernetes Dashboard using a LoadBalancer](https://github.com/alexandreroman/k8s-dashboard-loadbalancer)
-[Bare metal load balancer on Kubernetes with MetalLB ](https://dev.to/drazisil/bare-metal-load-balancer-on-kubernetes-with-metallb-3h2k)
-[TKS (TJ's Kubernetes Service)](https://github.com/zimmertr/Bootstrap-Kubernetes-with-QEMU/blob/master/playbooks/optional/deploy_dashboard.yml)
+ 
+- [Expose your Kubernetes Dashboard using a LoadBalancer](https://github.com/alexandreroman/k8s-dashboard-loadbalancer)
+- [Bare metal load balancer on Kubernetes with MetalLB ](https://dev.to/drazisil/bare-metal-load-balancer-on-kubernetes-with-metallb-3h2k)
+- [TKS (TJ's Kubernetes Service)](https://github.com/zimmertr/Bootstrap-Kubernetes-with-QEMU/blob/master/playbooks/optional/deploy_dashboard.yml)
 
-[https://github.com/kubernetes/dashboard/blob/master/docs/user/accessing-dashboard/README.md](https://github.com/kubernetes/dashboard/blob/master/docs/user/accessing-dashboard/README.md)
-[https://gist.github.com/addshore/5e1fbfeb3bd97f8ebf50d68899c28fd5](https://gist.github.com/addshore/5e1fbfeb3bd97f8ebf50d68899c28fd5)
+- [https://github.com/kubernetes/dashboard/blob/master/docs/user/accessing-dashboard/README.md](https://github.com/kubernetes/dashboard/blob/master/docs/user/accessing-dashboard/README.md)
+- [https://gist.github.com/addshore/5e1fbfeb3bd97f8ebf50d68899c28fd5](https://gist.github.com/addshore/5e1fbfeb3bd97f8ebf50d68899c28fd5)
 
 
-[https://blog.heptio.com/on-securing-the-kubernetes-dashboard-16b09b1b7aca](https://blog.heptio.com/on-securing-the-kubernetes-dashboard-16b09b1b7aca
-)
+- [https://blog.heptio.com/on-securing-the-kubernetes-dashboard-16b09b1b7aca](https://blog.heptio.com/on-securing-the-kubernetes-dashboard-16b09b1b7aca)
 
-```
-#( 12/04/20@ 4:03AM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4
-   openssl req -nodes -newkey rsa:2048 -keyout certs/dashboard.key -out certs/dashboard.csr -subj "/C=/ST=/L=/O=/OU=/CN=kubernetes-dashboard"
-Generating a 2048 bit RSA private key
-................................................+++
-..................................................................................................................+++
-writing new private key to 'certs/dashboard.key'
------
-No value provided for Subject Attribute C, skipped
-No value provided for Subject Attribute ST, skipped
-No value provided for Subject Attribute L, skipped
-No value provided for Subject Attribute O, skipped
-No value provided for Subject Attribute OU, skipped
-#( 12/04/20@ 4:03AM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4
-   openssl x509 -req -sha256 -days 365 -in certs/dashboard.csr -signkey certs/dashboard.key -out certs/dashboard.crt
-Signature ok
-subject=/CN=kubernetes-dashboard
-Getting Private key
-#( 12/04/20@ 4:03AM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4
-   cd certs
-#( 12/04/20@ 4:04AM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/certs
-   ls -la
-total 24
-drwxr-xr-x   5 dbuddenbaum  staff   160 Dec  4 04:03 .
-drwxr-xr-x  15 dbuddenbaum  staff   480 Dec  4 04:01 ..
--rw-r--r--   1 dbuddenbaum  staff  1005 Dec  4 04:03 dashboard.crt
--rw-r--r--   1 dbuddenbaum  staff   907 Dec  4 04:03 dashboard.csr
--rw-r--r--   1 dbuddenbaum  staff  1704 Dec  4 04:03 dashboard.key
-#( 12/04/20@ 4:05AM )( dbuddenbaum@dbuddenbaum-mbp ):~
-   kubectl delete secret generic kubernetes-dashboard-certs  -n kubernetes-dashboard
-cd ..
-secret "kubernetes-dashboard-certs" deleted
-Error from server (NotFound): secrets "generic" not found
-#( 12/04/20@ 4:07AM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/certs
-   kubectl create secret generic kubernetes-dashboard-certs --from-file=dashboard.crt -n kubernetes-dashboard
-secret/kubernetes-dashboard-certs created
-#( 12/04/20@ 4:08AM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/certs
-   kubectl delete pod -n kubernetes-dashboard -l k8s-app=kubernetes-dashboard
 
-pod "kubernetes-dashboard-64999dbccd-6pdlc" deleted
-#( 12/04/20@ 4:09AM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/certs
-
-```
-
-[The Ultimate Guide to the Kubernetes Dashboard: How to Install and Integrate Metrics-server](https://www.replex.io/blog/the-ultimate-guide-to-the-kubernetes-dashboard-how-to-install-and-integrate-metrics-server)
+- [The Ultimate Guide to the Kubernetes Dashboard: How to Install and Integrate Metrics-server](https://www.replex.io/blog/the-ultimate-guide-to-the-kubernetes-dashboard-how-to-install-and-integrate-metrics-server)

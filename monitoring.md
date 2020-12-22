@@ -1,8 +1,8 @@
 # Monitoring
-
+[Practical Monitoring with Prometheus & Grafana (Part I)](https://yitaek.medium.com/practical-monitoring-with-prometheus-grafana-part-i-22d0f172f993)
 [Monitoring and Alerting on your Kubernetes Cluster with Prometheus and Grafana](https://gregoiredayet.medium.com/monitoring-and-alerting-on-your-kubernetes-cluster-with-prometheus-and-grafana-55e4b427b22d)
 
-## Prometheus
+## Prometheus (new location https://charts.helm.sh/stable)
 helm repo add stable https://kubernetes-charts.storage.googleapis.com
 helm repo list
 
@@ -86,7 +86,9 @@ Visit https://github.com/coreos/prometheus-operator for instructions on how
 to create & configure Alertmanager and Prometheus instances using the Operator.
 ```
 **#( 11/09/20@10:19PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4**
-    **kubectl --namespace monitor get pods -l "release=prometheus"**
+   
+   kubectl --namespace monitor get pods -l "release=prometheus"
+   
 ```
 NAME                                                   READY   STATUS             RESTARTS   AGE
 prometheus-prometheus-node-exporter-8bbb2              1/1     Running            0          98s
@@ -102,6 +104,9 @@ prometheus-prometheus-oper-operator-85cc758cdb-hjwdt   0/2     CrashLoopBackOff 
 
 ```
 
+
+helm install grafana stable/grafana
+
 ## Cluster Monitoring stack for ARM / X86-64 platforms
 
 https://github.com/youngkin/cluster-monitoring
@@ -109,3 +114,100 @@ https://github.com/youngkin/cluster-monitoring
 [https://github.com/youngkin/cluster-monitoring](https://github.com/youngkin/cluster-monitoring)
 
 [Building a hybrid x86–64 and ARM Kubernetes Cluster](https://medium.com/@carlosedp/building-a-hybrid-x86-64-and-arm-kubernetes-cluster-e7f94ff6e51d)
+
+**#( 12/21/20@ 9:15PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4**
+  
+   helm install prometheus stablenew/prometheus -n monitor
+
+```   
+WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /Users/dbuddenbaum/.kube/config
+WARNING: Kubernetes configuration file is world-readable. This is insecure. Location: /Users/dbuddenbaum/.kube/config
+WARNING: This chart is deprecated
+NAME: prometheus
+LAST DEPLOYED: Mon Dec 21 21:16:17 2020
+NAMESPACE: monitor
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+DEPRECATED and moved to <https://github.com/prometheus-community/helm-charts>The Prometheus server can be accessed via port 80 on the following DNS name from within your cluster:
+prometheus-server.monitor.svc.cluster.local
+
+
+Get the Prometheus server URL by running these commands in the same shell:
+  export POD_NAME=$(kubectl get pods --namespace monitor -l "app=prometheus,component=server" -o jsonpath="{.items[0].metadata.name}")
+  kubectl --namespace monitor port-forward $POD_NAME 9090
+
+
+The Prometheus alertmanager can be accessed via port 80 on the following DNS name from within your cluster:
+prometheus-alertmanager.monitor.svc.cluster.local
+
+
+Get the Alertmanager URL by running these commands in the same shell:
+  export POD_NAME=$(kubectl get pods --namespace monitor -l "app=prometheus,component=alertmanager" -o jsonpath="{.items[0].metadata.name}")
+  kubectl --namespace monitor port-forward $POD_NAME 9093
+#################################################################################
+######   WARNING: Pod Security Policy has been moved to a global property.  #####
+######            use .Values.podSecurityPolicy.enabled with pod-based      #####
+######            annotations                                               #####
+######            (e.g. .Values.nodeExporter.podSecurityPolicy.annotations) #####
+#################################################################################
+
+
+The Prometheus PushGateway can be accessed via port 9091 on the following DNS name from within your cluster:
+prometheus-pushgateway.monitor.svc.cluster.local
+
+
+Get the PushGateway URL by running these commands in the same shell:
+  export POD_NAME=$(kubectl get pods --namespace monitor -l "app=prometheus,component=pushgateway" -o jsonpath="{.items[0].metadata.name}")
+  kubectl --namespace monitor port-forward $POD_NAME 9091
+
+For more information on running Prometheus, visit:
+https://prometheus.io/
+```
+**#( 12/21/20@ 9:16PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4**
+
+   kubectl patch deployment prometheus-kube-state-metrics -n monitor --patch '{"spec": {"template": {"spec": {"nodeSelector": {"beta.kubernetes.io/arch": "amd64"}}}}}'
+   
+```
+deployment.apps/prometheus-kube-state-metrics patched
+```
+
+**#( 12/21/20@ 9:41PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4**
+
+   helm install grafana stablenew/grafana -n monitor
+   
+```  
+WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /Users/dbuddenbaum/.kube/config
+WARNING: Kubernetes configuration file is world-readable. This is insecure. Location: /Users/dbuddenbaum/.kube/config
+WARNING: This chart is deprecated
+NAME: grafana
+LAST DEPLOYED: Mon Dec 21 21:41:45 2020
+NAMESPACE: monitor
+STATUS: deployed
+REVISION: 1
+NOTES:
+*******************
+****DEPRECATED*****
+*******************
+* The chart is deprecated. Future development has been moved to https://github.com/grafana/helm2-grafana
+
+1. Get your 'admin' user password by running:
+
+   kubectl get secret --namespace monitor grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+
+2. The Grafana server can be accessed via port 80 on the following DNS name from within your cluster:
+
+   grafana.monitor.svc.cluster.local
+
+   Get the Grafana URL to visit by running these commands in the same shell:
+
+     export POD_NAME=$(kubectl get pods --namespace monitor -l "app.kubernetes.io/name=grafana,app.kubernetes.io/instance=grafana" -o jsonpath="{.items[0].metadata.name}")
+     kubectl --namespace monitor port-forward $POD_NAME 3000
+
+3. Login with the password from step 1 and the username: admin
+#################################################################################
+######   WARNING: Persistence is disabled!!! You will lose your data when   #####
+######            the Grafana pod is terminated.                            #####
+#################################################################################
+```
