@@ -211,3 +211,44 @@ NOTES:
 ######            the Grafana pod is terminated.                            #####
 #################################################################################
 ```
+
+**#( 12/21/20@ 9:44PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy@master✔**
+
+    kubectl get secret --namespace monitor grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+```
+UEQGmcNP6GbEkOOMWKZOGNAnootvSTpzRzYHvTOE
+```
+
+**()#( 12/21/20@ 9:47PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy@master✗✗✗**
+
+        export POD_NAME=$(kubectl get pods --namespace monitor -l "app.kubernetes.io/name=grafana,app.kubernetes.io/instance=grafana" -o jsonpath="{.items[0].metadata.name}")
+     kubectl --namespace monitor port-forward $POD_NAME 3000
+
+```
+Forwarding from 127.0.0.1:3000 -> 3000
+Forwarding from [::1]:3000 -> 3000
+Handling connection for 3000
+Handling connection for 3000
+Handling connection for 3000
+Handling connection for 3000
+Handling connection for 3000
+Handling connection for 3000
+```
+http://localhost:3000/login
+
+**#( 12/21/20@10:39PM )( dbuddenbaum@dbuddenbaum-mbp ):~**
+
+   helm install community prometheus-community/prometheus-blackbox-exporter -n monitor
+   
+```
+WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /Users/dbuddenbaum/.kube/config
+WARNING: Kubernetes configuration file is world-readable. This is insecure. Location: /Users/dbuddenbaum/.kube/config
+NAME: community
+LAST DEPLOYED: Mon Dec 21 22:39:35 2020
+NAMESPACE: monitor
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+See https://github.com/prometheus/blackbox_exporter/ for how to configure Prometheus and the Blackbox Exporter.
+```
