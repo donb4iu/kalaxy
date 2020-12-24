@@ -252,3 +252,5 @@ TEST SUITE: None
 NOTES:
 See https://github.com/prometheus/blackbox_exporter/ for how to configure Prometheus and the Blackbox Exporter.
 ```
+
+![clusterUp](../kalaxy/images/set_prometheus_server_datasource.png)

@@ -13,7 +13,7 @@ sudo apt-get update && sudo apt-get install htop -y
 xcode-select --install
 ```
 
-![clusterUp](../kalaxy_lfs_issue/images/cluster-initial-up.png)
+![clusterUp](../kalaxy/images/cluster-initial-up.png)
 
 ## Flash
 
