@@ -2,6 +2,12 @@
 
 [Build Bare Metal Kubernetes Dualstack Calico Metallb RaspberryPI 4 Ubuntu Server 64bit. (64bit required!!!)](https://github.com/Trackhe/Raspberry64bitKubernetesServerDualstack)
 
+[Force all pods in a specific namespace to schedule on defined hosts with Kubernetes](https://blog.valouille.fr/post/2019-08-23-force-pods-in-a-specific-namespace-to-schedule-on-defined-nodes-with-kubernetes/)
+
+[Control Pod Placement to Projects](https://vocon-it.com/2019/09/08/cka-12-kubernetes-labels-and-node-selectors/)
+
+[Understanding and using the Kubernetes PodNodeSelector Admission Controller](https://www.mgasch.com/post/podnodesel/)
+
 ## Raspberry Pi Monitoring
 
 ```
