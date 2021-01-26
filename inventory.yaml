@@ -19,7 +19,7 @@ all:
       ansible_host: 192.168.2.57
     amd64-04:
       ansible_host: 192.168.2.58
-    amd64-04:
+    amd64-05:
       ansible_host: 192.168.2.59
   children:
     k3s_master:
