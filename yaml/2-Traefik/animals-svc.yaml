@@ -1,0 +1,44 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bear
+  namespace: amd64default
+spec:
+  type: ExternalName
+  externalName: bear.service-1-ns.
+  ports:
+    - name: http
+      targetPort: 80
+      port: 80
+  selector:
+    app: animals
+    task: bear
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: moose
+  namespace: amd64default
+spec:
+  ports:
+    - name: http
+      targetPort: 80
+      port: 80
+  selector:
+    app: animals
+    task: moose
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hare
+  namespace: amd64default
+spec:
+  ports:
+    - name: http
+      targetPort: 80
+      port: 80
+  selector:
+    app: animals
+    task: hare

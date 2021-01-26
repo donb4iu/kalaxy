@@ -16,7 +16,6 @@ xcode-select --install
 ![clusterUp](../kalaxy/images/cluster-initial-up.png)
 
 ## Flash
-
 ```bash
 flash \
     --userdata setup/cloud-config.yml \
