@@ -5,10 +5,8 @@ metadata:
   name: bear
   namespace: amd64default
 spec:
-  type: ExternalName
-  externalName: bear.service-1-ns.
   ports:
-    - name: http
+    - protocol: TCP
       targetPort: 80
       port: 80
   selector:
@@ -22,7 +20,7 @@ metadata:
   namespace: amd64default
 spec:
   ports:
-    - name: http
+    - protocol: TCP
       targetPort: 80
       port: 80
   selector:
@@ -36,7 +34,7 @@ metadata:
   namespace: amd64default
 spec:
   ports:
-    - name: http
+    - protocol: TCP
       targetPort: 80
       port: 80
   selector:

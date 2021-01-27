@@ -21,3 +21,14 @@ ingress "mysite-nginx-ingress" created
    192.168.2.20 donb-k8s
 
 [hello](http://donb-k8s/hello)
+
+
+
+
+**#( 01/27/21@ 1:18AM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/mysite@master✗✗✗**
+
+   kubectl create configmap mysitearm-html --from-file indexarm.html -n arm64default
+
+'''
+configmap/mysitearm-html created
+'''
