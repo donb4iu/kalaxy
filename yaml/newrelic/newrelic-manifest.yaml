@@ -155,6 +155,8 @@ spec:
         release: nri-bundle
         app.kubernetes.io/name: newrelic-logging
     spec:
+      nodeSelector:
+        kubernetes.io/arch: amd64
       serviceAccountName: nri-bundle-newrelic-logging
       hostNetwork: true # This option is a requirement for the Infrastructure Agent to report the proper hostname in New Relic.
       dnsPolicy: ClusterFirstWithHostNet
@@ -1013,6 +1015,8 @@ spec:
         release: nri-bundle
         mode: privileged
     spec:
+      nodeSelector:
+        kubernetes.io/arch: amd64
       serviceAccountName: nri-bundle-newrelic-infrastructure
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
