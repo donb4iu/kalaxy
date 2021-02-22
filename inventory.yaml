@@ -1,15 +1,15 @@
 ---
 all:
   hosts:
-    arm64-01:
+    arm64-master-01:
       ansible_host: 192.168.2.50
-    arm64-02:
+    arm64-worker-01:
       ansible_host: 192.168.2.51
-    arm64-03:
+    arm64-worker-02:
       ansible_host: 192.168.2.52
-    arm64-04:
+    arm64-worker-03:
       ansible_host: 192.168.2.53
-    arm64-05:
+    arm64-worker-04:
       ansible_host: 192.168.2.54
     amd64-01:
       ansible_host: 192.168.2.55
@@ -35,22 +35,22 @@ all:
     k8s_worker:
       hosts:
       # At least one worker unless there is no master:
-        arm64-01: {}
-        arm64-02: {}
-        arm64-03: {}
-        arm64-04: {}
-        arm64-05: {}
+        arm64-master-01: {}
+        arm64-worker-01: {}
+        arm64-worker-02: {}
+        arm64-worker-03: {}
+        arm64-worker-04: {}
         amd64-01: {}
         amd64-03: {}
         amd64-04: {}
         amd64-05: {}
     raspberry_pi:
       hosts:
-        arm64-01: {}
-        arm64-02: {}
-        arm64-03: {}
-        arm64-04: {}
-        arm64-05: {}
+        arm64-master-01: {}
+        arm64-worker-01: {}
+        arm64-worker-02: {}
+        arm64-worker-03: {}
+        arm64-worker-04: {}
     amd64:
       hosts:
         amd64-01: {}
@@ -75,11 +75,11 @@ all:
         boot_directory: /boot
     rpi4:
       hosts:
-        arm64-01: {}
-        arm64-02: {}
-        arm64-03: {}
-        arm64-04: {}
-        arm64-05: {}
+        arm64-master-01: {}
+        arm64-worker-01: {}
+        arm64-worker-02: {}
+        arm64-worker-03: {}
+        arm64-worker-04: {}
       vars:
         ansible_ssh_user: pi
         boot_directory: /boot/firmware
