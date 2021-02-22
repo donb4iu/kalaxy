@@ -1,6 +1,15 @@
-[How to assign a namespace to certain nodes?](https://stackoverflow.com/questions/52487333/how-to-assign-a-namespace-to-certain-nodes)
+[How to assign a namespace to certain node architectures](https://stackoverflow.com/questions/52487333/how-to-assign-a-namespace-to-certain-nodes)
 
-# amd64default 
+# Namespaces by node architecture
+
+**First, you need to enable it in your kubernetes-apiserver:**
+
+**Edit /etc/kubernetes/manifests/kube-apiserver.yaml:**
+
+**--enable-admission-plugins=PodNodeSelector**
+
+
+## amd64default 
 ```
 kind: Namespace
 apiVersion: v1
@@ -21,7 +30,7 @@ status:
   phase: Active
 ```
 
-# arm64default 
+## arm64default 
 ```
 kind: Namespace
 apiVersion: v1
