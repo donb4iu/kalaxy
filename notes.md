@@ -112,8 +112,8 @@ net.bridge.bridge-nf-call-iptables=1
 /usr/sbin/sysctl/net.bridge.bridge-nf-call-iptables=1
 net.bridge.bridge-nf-call-ip6tables=1
 net.bridge.bridge-nf-call-arptables=1
-```
-sudo modprobe br_netfilter
+```sudo modprobe br_netfilter
+
 
 **dbuddenbaum@amd64-worker-03:~$** echo "deb http://packages.azlux.fr/debian/ buster main" | sudo tee /etc/apt/sources.list.d/azlux.list
 ```
