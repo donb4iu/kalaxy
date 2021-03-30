@@ -21,6 +21,8 @@ all:
       ansible_host: 192.168.2.58
     amd64-05:
       ansible_host: 192.168.2.59
+    amd64-06:
+      ansible_host: 192.168.2.60
   children:
     k3s_master:
       # At most one master:
@@ -44,6 +46,7 @@ all:
         amd64-03: {}
         amd64-04: {}
         amd64-05: {}
+        amd64-06: {}
     raspberry_pi:
       hosts:
         arm64-master-01: {}
@@ -58,6 +61,7 @@ all:
         amd64-03: {}
         amd64-04: {}
         amd64-05: {}
+        amd64-06: {}
     raspbian:
       hosts: {}
       vars:
@@ -70,6 +74,7 @@ all:
         amd64-03: {}
         amd64-04: {}
         amd64-05: {}
+        amd64-06: {}
       vars:
         ansible_ssh_user: dbuddenbaum
         boot_directory: /boot
