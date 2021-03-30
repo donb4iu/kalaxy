@@ -38,10 +38,10 @@ spec:
         name: boinc-workers
         #args: ["-attach_project", <BoincProjectServer>, <Account Key>]
         args: ["-attach_project", "www.worldcommunitygrid.org", "66a7be56ce6804b494c1fac72dd283bf"]
-        resources:
-              limits:
-                cpu: "1"
-              requests:
-                cpu: "0.5"
+#        resources:
+#              limits:
+#                cpu: "1"
+#              requests:
+#                cpu: "0.5"
       nodeSelector:
         kubernetes.io/arch: amd64

@@ -77,6 +77,13 @@ sudo apt update
 
 sudo apt upgrade
 
+### Add User
+
+```
+sudo adduser -u 1200 <username>
+
+```
+
 ### SUDO
 
 sudo visudo

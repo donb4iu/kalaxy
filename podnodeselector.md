@@ -14,7 +14,7 @@
 kind: Namespace
 apiVersion: v1
 metadata:
-  name: amd64default
+      name: amd64default
   selfLink: /api/v1/namespaces/amd64default
   uid: 9aab3749-6195-45d1-bb0e-1a9e26fa24a1
   resourceVersion: '22212983'

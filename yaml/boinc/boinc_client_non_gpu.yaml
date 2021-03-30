@@ -38,6 +38,11 @@ spec:
               value: "123"
             - name: BOINC_CMD_LINE_OPTIONS
               value: "--allow_remote_gui_rpc"
+          resources:
+            limits:
+              cpu: '1'
+            requests:
+              cpu: 500m
           volumeMounts:
             - mountPath: /var/lib/boinc
               name: rosettaathomedata
