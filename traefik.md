@@ -8,7 +8,8 @@
 
 [deploy](https://medium.com/kubernetes-tutorials/deploying-traefik-as-ingress-controller-for-your-kubernetes-cluster-b03a0672ae0c)
 
-
+[metallb integration](https://www.devtech101.com/2019/02/23/using-metallb-and-traefik-load-balancing-for-your-bare-metal-kubernetes-cluster-part-1/
+)
 ### Step 1: Enabling RBAC
 
 kubectl create -f traefik-service-acc.yaml

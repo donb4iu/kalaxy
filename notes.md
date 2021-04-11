@@ -119,8 +119,8 @@ net.bridge.bridge-nf-call-iptables=1
 /usr/sbin/sysctl/net.bridge.bridge-nf-call-iptables=1
 net.bridge.bridge-nf-call-ip6tables=1
 net.bridge.bridge-nf-call-arptables=1
-```sudo modprobe br_netfilter
-
+sudo modprobe br_netfilter
+```
 
 **dbuddenbaum@amd64-worker-03:~$** echo "deb http://packages.azlux.fr/debian/ buster main" | sudo tee /etc/apt/sources.list.d/azlux.list
 ```
@@ -233,3 +233,20 @@ Then reload
   sudo systemctl daemon-reload
   sudo systemctl restart docker
 ```
+## temoperature probe amd64
+
+sudo apt-get install lm-sensors
+
+sudo service kmod start
+
+**dbuddenbaum@amd64-05:~$** sensors
+```
+coretemp-isa-0000
+Adapter: ISA adapter
+Core 0:       +70.0°C  (high = +74.0°C, crit = +100.0°C)
+Core 1:       +63.0°C  (high = +74.0°C, crit = +100.0°C)
+Core 2:       +65.0°C  (high = +74.0°C, crit = +100.0°C)
+Core 3:       +64.0°C  (high = +74.0°C, crit = +100.0°C)
+```
+
+sudo sensors-detect
