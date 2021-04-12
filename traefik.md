@@ -237,3 +237,43 @@ echo "$(minikube ip) traefik-ui.minikube" | sudo tee -a /etc/hosts
  - [hare](http://animals.traefik:31295/hare/)
   
   
+## Traefik
+
+deploy
+
+
+**#( 04/12/21@10:12AM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/2-Traefik@master✗✗✗**
+  
+   kubectl describe svc traefik-ingress-service --namespace=kube-system
+   
+```   
+Name:                     traefik-ingress-service
+Namespace:                kube-system
+Labels:                   app=traefik
+Annotations:              kubectl.kubernetes.io/last-applied-configuration:
+                            {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"traefik"},"name":"traefik-ingress-service","namespace":"...
+Selector:                 k8s-app=traefik-ingress-lb
+Type:                     LoadBalancer
+IP:                       10.106.124.204
+IP:                       192.168.2.20
+LoadBalancer Ingress:     192.168.2.20
+Port:                     web  80/TCP
+TargetPort:               80/TCP
+NodePort:                 web  32538/TCP
+Endpoints:                10.244.4.14:80,10.244.9.25:80
+Port:                     https  443/TCP
+TargetPort:               443/TCP
+NodePort:                 https  31837/TCP
+Endpoints:                10.244.4.14:443,10.244.9.25:443
+Port:                     metrics  8080/TCP
+TargetPort:               8080/TCP
+NodePort:                 metrics  30359/TCP
+Endpoints:                10.244.4.14:8080,10.244.9.25:8080
+Session Affinity:         None
+External Traffic Policy:  Local
+HealthCheck NodePort:     32649
+Events:
+  Type    Reason        Age                     From             Message
+  ----    ------        ----                    ----             -------
+  Normal  nodeAssigned  2m38s (x659 over 3d9h)  metallb-speaker  announcing from node "amd64-05"
+```
