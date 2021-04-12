@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: animals
-  namespace: amd64default
+  namespace: default
   annotations:
     kubernetes.io/ingress.class: traefik
     traefik.frontend.rule.type: PathPrefixStrip
@@ -15,11 +15,26 @@ spec:
             backend:
               serviceName: bear
               servicePort: 80
-          - path: /moose
-            backend:
-              serviceName: moose
-              servicePort: 80
           - path: /hare
             backend:
               serviceName: hare
               servicePort: 80
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: animals
+  namespace: amd64default
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.frontend.rule.type: PathPrefixStrip
+spec:
+  rules:
+    - host: animals.traefik
+      http:
+        paths:
+          - path: /moose
+            backend:
+              serviceName: moose
+              servicePort: 80
+

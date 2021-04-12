@@ -3,7 +3,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: bear
-  namespace: amd64default
+  namespace: default
   labels:
     app: animals
     animal: bear
@@ -25,6 +25,9 @@ spec:
           image: supergiantkir/animals:bear
           ports:
             - containerPort: 80
+      nodeSelector:
+        kubernetes.io/arch: amd64
+
 ---
 kind: Deployment
 apiVersion: apps/v1
@@ -57,7 +60,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: hare
-  namespace: amd64default
+  namespace: default
   labels:
     app: animals
     animal: hare
@@ -79,3 +82,5 @@ spec:
           image: supergiantkir/animals:hare
           ports:
             - containerPort: 80
+      nodeSelector:
+        kubernetes.io/arch: arm64
