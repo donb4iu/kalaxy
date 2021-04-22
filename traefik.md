@@ -277,3 +277,27 @@ Events:
   ----    ------        ----                    ----             -------
   Normal  nodeAssigned  2m38s (x659 over 3d9h)  metallb-speaker  announcing from node "amd64-05"
 ```
+
+**#( 04/13/21@12:29PM )( dbuddenbaum@dbuddenbaum-mbp ):/private/etc**
+
+   sudo vi hosts
+   
+```   
+192.168.2.50 animals
+192.168.2.50 donb-k8s
+```
+
+
+[bear](http://animals:32538/bear/)
+
+[moose](http://animals:32538/moose/)
+
+[hare](http://animals:32538/hare/)
+
+[dashboard](http://192.168.2.20:8080/dashboard/)
+
+[dashboard](http://animals:30359/dashboard/)
+
+[donbs cloud](http://donb-k8s:32538/hello/)
+
+[visualizer](http://donb-k8s:32538/visualizer/)
