@@ -65,8 +65,12 @@ Syncing disks.
 ## Rook/Ceph
 
 [How to deploy ROOK with CEPH in Kubernetes](https://d-heinrich.medium.com/how-to-deploy-rook-with-ceph-in-kubernetes-baa5a9183830)
+[The Ultimate Rook and Ceph Survival Guide](https://cloudopsofficial.medium.com/the-ultimate-rook-and-ceph-survival-guide-eff198a5764a)
+
 
 [Quick Start](https://rook.github.io/docs/rook/master/ceph-quickstart.html)
+
+[Rook Documentation](https://rook.io/docs/rook/v1.6/ceph-object.html)
 
 [cluster.yaml v1.6 Example](https://github.com/rook/rook/tree/release-1.6/cluster/examples/kubernetes/ceph)
 
@@ -171,3 +175,114 @@ customresourcedefinition.apiextensions.k8s.io/volumes.rook.io created
 ```
 cephcluster.ceph.rook.io/rook-ceph created
 ```
+
+**#( 04/23/21@ 3:33PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/rook-ceph@master✗✗✗**
+
+   kubectl create -f toolbox.yaml
+```   
+deployment.apps/rook-ceph-tools created
+```
+
+## Rook Tools
+
+**[root@rook-ceph-tools-5b4b587f6b-f6kxc /]#**
+ 
+ ceph status
+``` 
+  cluster:
+    id:     f75fe9b3-7779-41e6-82c7-7cb52ac8ae31
+    health: HEALTH_WARN
+            mons are allowing insecure global_id reclaim
+            Reduced data availability: 1 pg inactive
+            OSD count 0 < osd_pool_default_size 3
+ 
+  services:
+    mon: 3 daemons, quorum a,b,c (age 96m)
+    mgr: a(active, since 95m)
+    osd: 0 osds: 0 up, 0 in
+ 
+  data:
+    pools:   1 pools, 1 pgs
+    objects: 0 objects, 0 B
+    usage:   0 B used, 0 B / 0 B avail
+    pgs:     100.000% pgs unknown
+             1 unknown
+```             
+**[root@rook-ceph-tools-5b4b587f6b-f6kxc /]#**
+ 
+ ceph health detail
+```
+HEALTH_WARN mons are allowing insecure global_id reclaim; Reduced data availability: 1 pg inactive; OSD count 0 < osd_pool_default_size 3
+[WRN] AUTH_INSECURE_GLOBAL_ID_RECLAIM_ALLOWED: mons are allowing insecure global_id reclaim
+    mon.a has auth_allow_insecure_global_id_reclaim set to true
+    mon.b has auth_allow_insecure_global_id_reclaim set to true
+    mon.c has auth_allow_insecure_global_id_reclaim set to true
+[WRN] PG_AVAILABILITY: Reduced data availability: 1 pg inactive
+    pg 1.0 is stuck inactive for 100m, current state unknown, last acting []
+[WRN] TOO_FEW_OSDS: OSD count 0 < osd_pool_default_size 3
+```
+**[root@rook-ceph-tools-5b4b587f6b-f6kxc /]#**
+ 
+ ceph osd status
+ 
+**[root@rook-ceph-tools-5b4b587f6b-f6kxc /]#**
+ 
+ ceph osd pool ls detail
+```
+pool 1 'device_health_metrics' replicated size 3 min_size 2 crush_rule 0 object_hash rjenkins pg_num 1 pgp_num 1 autoscale_mode on last_change 11 flags hashpspool,creating stripe_width 0 pg_num_min 1 application mgr_devicehealth
+```
+
+**[root@rook-ceph-tools-5b4b587f6b-f6kxc /]#**
+ 
+ rados df
+``` 
+POOL_NAME              USED  OBJECTS  CLONES  COPIES  MISSING_ON_PRIMARY  UNFOUND  DEGRADED  RD_OPS   RD  WR_OPS   WR  USED COMPR  UNDER COMPR
+device_health_metrics   0 B        0       0       0                   0        0         0       0  0 B       0  0 B         0 B          0 B
+
+total_objects    0
+total_used       0 B
+total_avail      0 B
+total_space      0 B
+```
+
+##Dashboard
+
+
+**#( 04/23/21@ 4:14PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/rook-ceph@master✗✗✗**
+
+   kubectl create -f dashboard-loadbalancer.yaml
+```   
+service/rook-ceph-mgr-dashboard-loadbalancer created
+```
+
+**#( 04/23/21@ 4:30PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/rook-ceph@master✗✗✗**
+
+   kubectl -n rook-ceph get service
+```   
+NAME                                   TYPE           CLUSTER-IP       EXTERNAL-IP    PORT(S)             AGE
+csi-cephfsplugin-metrics               ClusterIP      10.100.195.171   <none>         8080/TCP,8081/TCP   170m
+csi-rbdplugin-metrics                  ClusterIP      10.108.25.77     <none>         8080/TCP,8081/TCP   170m
+rook-ceph-mgr                          ClusterIP      10.108.34.158    <none>         9283/TCP            151m
+rook-ceph-mgr-dashboard                ClusterIP      10.96.193.144    <none>         8443/TCP            151m
+rook-ceph-mgr-dashboard-loadbalancer   LoadBalancer   10.104.104.117   192.168.2.16   8443:30942/TCP      12m
+rook-ceph-mon-a                        ClusterIP      10.96.20.22      <none>         6789/TCP,3300/TCP   153m
+rook-ceph-mon-b                        ClusterIP      10.107.3.18      <none>         6789/TCP,3300/TCP   151m
+rook-ceph-mon-c                        ClusterIP      10.107.168.135   <none>         6789/TCP,3300/TCP   151m
+rook-ceph-rgw-my-store                 ClusterIP      10.98.124.217    <none>         80/TCP              19m
+```
+
+Login Credentials
+
+After you connect to the dashboard you will need to login for secure access. Rook creates a default user named **_admin_** and generates a secret called rook-ceph-dashboard-admin-password in the namespace where the Rook Ceph cluster is running. To retrieve the generated password, you can run the following:
+
+**#( 04/23/21@ 4:24PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/rook-ceph@master✗✗✗**
+
+   kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath="{['data']['password']}" | base64 --decode && echo
+   
+```   
+dlNt<c,5U!7Ey6q_zo"`
+```
+
+
+
+[ceph dashboard](https://192.168.2.16:8443/#/login?returnUrl=%2Fdashboard)
