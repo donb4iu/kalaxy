@@ -230,16 +230,16 @@ spec:
     nodes:
     - name: "192.168.2.50"
       devices:             # specific devices to use for storage can be specified for each node
-      - name: "sda2" # Whole storage device
+      - name: "/dev/sda2" # Whole storage device
     - name: "192.168.2.52"
       devices:             # specific devices to use for storage can be specified for each node
-      - name: "sda2" # Whole storage device
+      - name: "/dev/sda2" # Whole storage device
     - name: "192.168.2.53"
       devices:             # specific devices to use for storage can be specified for each node
-      - name: "sda2" # Whole storage device
+      - name: "/dev/sda2" # Whole storage device
     - name: "192.168.2.54"
       devices:             # specific devices to use for storage can be specified for each node
-      - name: "sda2" # Whole storage device
+      - name: "/dev/sda2" # Whole storage device
   # The section for configuring management of daemon disruptions during upgrade or fencing.
   disruptionManagement:
     # If true, the operator will create and manage PodDisruptionBudgets for OSD, Mon, RGW, and MDS daemons. OSD PDBs are managed dynamically

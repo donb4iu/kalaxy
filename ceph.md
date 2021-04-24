@@ -65,8 +65,10 @@ Syncing disks.
 ## Rook/Ceph
 
 [How to deploy ROOK with CEPH in Kubernetes](https://d-heinrich.medium.com/how-to-deploy-rook-with-ceph-in-kubernetes-baa5a9183830)
+
 [The Ultimate Rook and Ceph Survival Guide](https://cloudopsofficial.medium.com/the-ultimate-rook-and-ceph-survival-guide-eff198a5764a)
 
+[Build Ceph and Kubernetes Based Distributed File Storage System](https://medium.com/swlh/build-ceph-and-kubernetes-based-distributed-file-storage-system-943da3dd0d24)
 
 [Quick Start](https://rook.github.io/docs/rook/master/ceph-quickstart.html)
 
@@ -286,3 +288,24 @@ dlNt<c,5U!7Ey6q_zo"`
 
 
 [ceph dashboard](https://192.168.2.16:8443/#/login?returnUrl=%2Fdashboard)
+
+
+## CRD Deletion gets stuck
+
+**#( 04/24/21@ 6:09PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/rook-ceph@master✗✗✗**
+
+   kubectl patch crd/cephclusters.ceph.rook.io -p '{"metadata":{"finalizers":[]}}' --type=merge
+   
+```customresourcedefinition.apiextensions.k8s.io/cephclusters.ceph.rook.io patched```
+
+**#( 04/24/21@ 6:15PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/rook-ceph@master✗✗✗**
+
+   kubectl patch crd/cephobjectstores.ceph.rook.io -p '{"metadata":{"finalizers":[]}}' --type=merge
+
+```customresourcedefinition.apiextensions.k8s.io/cephobjectstores.ceph.rook.io patched```
+
+**#( 04/24/21@ 6:16PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/rook-ceph@master✗✗✗**
+
+   kubectl patch crd/cephobjectstoreusers.ceph.rook.io -p '{"metadata":{"finalizers":[]}}' --type=merge
+
+```customresourcedefinition.apiextensions.k8s.io/cephobjectstoreusers.ceph.rook.io patched```
