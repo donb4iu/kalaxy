@@ -121,6 +121,7 @@ net.bridge.bridge-nf-call-ip6tables=1
 net.bridge.bridge-nf-call-arptables=1
 sudo modprobe br_netfilter
 ```
+[nstall Ceph on ARM64 SBCs using Rook - kubernetes-xenial main v1.9.3](https://blog.thoughtsandbeers.com/2018/02/27/Install-Ceph-on-ARM64-SBCs-using-Rook/)
 
 **dbuddenbaum@amd64-worker-03:~$** echo "deb http://packages.azlux.fr/debian/ buster main" | sudo tee /etc/apt/sources.list.d/azlux.list
 ```

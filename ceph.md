@@ -61,7 +61,67 @@ Command (m for help): w
 The partition table has been altered.
 Calling ioctl() to re-read partition table.
 Syncing disks.
+``` 
+
+If the FSTYPE field is not empty, there is a filesystem on top of the corresponding device. In this case, you can use sda for Ceph partitions.
+
+**dbuddenbaum@arm64-worker-02:/var/lib$**
+ 
+ lsblk -f
+ 
+``` 
+NAME        FSTYPE   LABEL       UUID                                 FSAVAIL FSUSE% MOUNTPOINT
+loop0       squashfs                                                        0   100% /snap/core18/1990
+loop1       squashfs                                                        0   100% /snap/core18/2002
+loop2       squashfs                                                        0   100% /snap/lxd/19206
+loop3       squashfs                                                        0   100% /snap/lxd/19648
+loop4       squashfs                                                        0   100% /snap/snapd/11584
+loop5       squashfs                                                        0   100% /snap/snapd/11408
+sda
+mmcblk0
+├─mmcblk0p1 vfat     system-boot B726-57E2                             132.8M    47% /boot/firmware
+└─mmcblk0p2 ext4     writable    483efb12-d682-4daf-9b34-6e2f774b56f7     10G    61% /
 ```
+
+Preparing the external SSD
+
+Attach the SSD drive to the Raspberry Pi with USB
+
+    The SSD will probably show up as '/dev/sda'.
+    sudo mkfs.xfs /dev/sdb1 -f ( this will erase all contents of the SSD ).
+    sudo mkdir /mnt/ssd
+    sudo mount /dev/sdb1 /mnt/ssd
+
+
+## disk clean up
+
+**dbuddenbaum@arm64-worker-02:~$**
+ 
+ DISK="/dev/sda"
+ 
+**dbuddenbaum@arm64-worker-02:~$**
+ 
+ sudo sgdisk --zap-all $DISK
+
+``` 
+GPT data structures destroyed! You may now partition the disk using fdisk or
+other utilities.
+```
+
+**dbuddenbaum@arm64-worker-02:/var/lib$**
+ 
+ sudo dd if=/dev/zero of="$DISK" bs=1M count=100 oflag=direct,dsync
+
+``` 
+100+0 records in
+100+0 records out
+104857600 bytes (105 MB, 100 MiB) copied, 6.19267 s, 16.9 MB/s
+```
+
+dbuddenbaum@arm64-worker-02:/var/lib$ rm -rf /dev/ceph-*
+dbuddenbaum@arm64-worker-02:/var/lib$ rm -rf /dev/mapper/ceph--*
+
+
 ## Rook/Ceph
 
 [How to deploy ROOK with CEPH in Kubernetes](https://d-heinrich.medium.com/how-to-deploy-rook-with-ceph-in-kubernetes-baa5a9183830)
@@ -80,6 +140,28 @@ Syncing disks.
 
 [https://github.com/rook/rook/tree/release-1.6](https://github.com/rook/rook/tree/release-1.6)
 
+**#( 04/23/21@ 1:28PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/rook-ceph@master✗✗✗**
+
+   kubectl create -f crds.yaml
+```
+customresourcedefinition.apiextensions.k8s.io/cephblockpools.ceph.rook.io created
+customresourcedefinition.apiextensions.k8s.io/cephclients.ceph.rook.io created
+customresourcedefinition.apiextensions.k8s.io/cephclusters.ceph.rook.io created
+customresourcedefinition.apiextensions.k8s.io/cephfilesystemmirrors.ceph.rook.io created
+customresourcedefinition.apiextensions.k8s.io/cephfilesystems.ceph.rook.io created
+customresourcedefinition.apiextensions.k8s.io/cephnfses.ceph.rook.io created
+customresourcedefinition.apiextensions.k8s.io/cephobjectrealms.ceph.rook.io created
+customresourcedefinition.apiextensions.k8s.io/cephobjectstores.ceph.rook.io created
+customresourcedefinition.apiextensions.k8s.io/cephobjectstoreusers.ceph.rook.io created
+customresourcedefinition.apiextensions.k8s.io/cephobjectzonegroups.ceph.rook.io created
+customresourcedefinition.apiextensions.k8s.io/cephobjectzones.ceph.rook.io created
+customresourcedefinition.apiextensions.k8s.io/cephrbdmirrors.ceph.rook.io created
+customresourcedefinition.apiextensions.k8s.io/objectbucketclaims.objectbucket.io created
+customresourcedefinition.apiextensions.k8s.io/objectbuckets.objectbucket.io created
+customresourcedefinition.apiextensions.k8s.io/volumereplicationclasses.replication.storage.openshift.io created
+customresourcedefinition.apiextensions.k8s.io/volumereplications.replication.storage.openshift.io created
+customresourcedefinition.apiextensions.k8s.io/volumes.rook.io created
+```
 
 **#( 04/23/21@12:51PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/rook-ceph@master✗✗✗**
    
@@ -149,28 +231,23 @@ configmap/rook-ceph-operator-config created
 deployment.apps/rook-ceph-operator created
 ```
 
-**#( 04/23/21@ 1:28PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/rook-ceph@master✗✗✗**
+**#( 04/27/21@11:33AM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/rook-ceph@master✗✗✗**
 
-   kubectl create -f crds.yaml
+   kubectl -n rook-ceph get pod
+```   
+NAME                                  READY   STATUS    RESTARTS   AGE
+rook-ceph-operator-855f844cf4-hdltl   1/1     Running   0          58s
+rook-discover-8vq5g                   1/1     Running   0          56s
+rook-discover-hlbj2                   1/1     Running   0          56s
+rook-discover-ktmgk                   1/1     Running   0          57s
+rook-discover-n28xn                   1/1     Running   0          57s
+rook-discover-nmtft                   1/1     Running   0          56s
+rook-discover-pczgp                   1/1     Running   0          56s
+rook-discover-ph5cc                   1/1     Running   0          56s
+rook-discover-vlz89                   1/1     Running   0          57s
+rook-discover-zdqzd                   1/1     Running   0          56s
 ```
-customresourcedefinition.apiextensions.k8s.io/cephblockpools.ceph.rook.io created
-customresourcedefinition.apiextensions.k8s.io/cephclients.ceph.rook.io created
-customresourcedefinition.apiextensions.k8s.io/cephclusters.ceph.rook.io created
-customresourcedefinition.apiextensions.k8s.io/cephfilesystemmirrors.ceph.rook.io created
-customresourcedefinition.apiextensions.k8s.io/cephfilesystems.ceph.rook.io created
-customresourcedefinition.apiextensions.k8s.io/cephnfses.ceph.rook.io created
-customresourcedefinition.apiextensions.k8s.io/cephobjectrealms.ceph.rook.io created
-customresourcedefinition.apiextensions.k8s.io/cephobjectstores.ceph.rook.io created
-customresourcedefinition.apiextensions.k8s.io/cephobjectstoreusers.ceph.rook.io created
-customresourcedefinition.apiextensions.k8s.io/cephobjectzonegroups.ceph.rook.io created
-customresourcedefinition.apiextensions.k8s.io/cephobjectzones.ceph.rook.io created
-customresourcedefinition.apiextensions.k8s.io/cephrbdmirrors.ceph.rook.io created
-customresourcedefinition.apiextensions.k8s.io/objectbucketclaims.objectbucket.io created
-customresourcedefinition.apiextensions.k8s.io/objectbuckets.objectbucket.io created
-customresourcedefinition.apiextensions.k8s.io/volumereplicationclasses.replication.storage.openshift.io created
-customresourcedefinition.apiextensions.k8s.io/volumereplications.replication.storage.openshift.io created
-customresourcedefinition.apiextensions.k8s.io/volumes.rook.io created
-```
+
 **#( 04/23/21@ 1:31PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/rook-ceph@master✗✗✗**
 
    kubectl create -f cluster.yaml
@@ -191,24 +268,21 @@ deployment.apps/rook-ceph-tools created
  
  ceph status
 ``` 
-  cluster:
-    id:     f75fe9b3-7779-41e6-82c7-7cb52ac8ae31
-    health: HEALTH_WARN
-            mons are allowing insecure global_id reclaim
-            Reduced data availability: 1 pg inactive
-            OSD count 0 < osd_pool_default_size 3
- 
-  services:
-    mon: 3 daemons, quorum a,b,c (age 96m)
-    mgr: a(active, since 95m)
-    osd: 0 osds: 0 up, 0 in
- 
-  data:
-    pools:   1 pools, 1 pgs
-    objects: 0 objects, 0 B
-    usage:   0 B used, 0 B / 0 B avail
-    pgs:     100.000% pgs unknown
-             1 unknown
+   cluster:
+     id:     4540e5a9-4563-4bc7-95da-1494b6a32132
+     health: HEALTH_WARN
+             mons are allowing insecure global_id reclaim
+  
+   services:
+     mon: 3 daemons, quorum a,b,c (age 3m)
+     mgr: a(active, since 101s)
+     osd: 8 osds: 8 up (since 2m), 8 in (since 2m)
+  
+   data:
+     pools:   1 pools, 1 pgs
+     objects: 3 objects, 0 B
+     usage:   8.0 GiB used, 5.7 TiB / 5.7 TiB avail
+     pgs:     1 active+clean
 ```             
 **[root@rook-ceph-tools-5b4b587f6b-f6kxc /]#**
  
@@ -227,24 +301,36 @@ HEALTH_WARN mons are allowing insecure global_id reclaim; Reduced data availabil
  
  ceph osd status
  
+```
+ID  HOST              USED  AVAIL  WR OPS  WR DATA  RD OPS  RD DATA  STATE      
+ 0  arm64-worker-03  1027M   900G      0        0       0        0   exists,up  
+ 1  amd64-05         1027M   434G      0        0       0        0   exists,up  
+ 2  amd64-03         1027M   434G      0        0       0        0   exists,up  
+ 3  amd64-04         1027M   434G      0        0       0        0   exists,up  
+ 4  amd64-02         1027M   900G      0        0       0        0   exists,up  
+ 5  arm64-master-01  1027M   900G      0        0       0        0   exists,up  
+ 6  arm64-worker-02  1027M   900G      0        0       0        0   exists,up  
+ 7  arm64-worker-04  1027M   900G      0        0       0        0   exists,up 
+
+```
+ 
 **[root@rook-ceph-tools-5b4b587f6b-f6kxc /]#**
  
  ceph osd pool ls detail
 ```
-pool 1 'device_health_metrics' replicated size 3 min_size 2 crush_rule 0 object_hash rjenkins pg_num 1 pgp_num 1 autoscale_mode on last_change 11 flags hashpspool,creating stripe_width 0 pg_num_min 1 application mgr_devicehealth
-```
+pool 1 'device_health_metrics' replicated size 3 min_size 2 crush_rule 0 object_hash rjenkins pg_num 1 pgp_num 1 autoscale_mode on last_change 29 flags hashpspool stripe_width 0 pg_num_min 1 application mgr_devicehealth```
 
 **[root@rook-ceph-tools-5b4b587f6b-f6kxc /]#**
  
  rados df
 ``` 
-POOL_NAME              USED  OBJECTS  CLONES  COPIES  MISSING_ON_PRIMARY  UNFOUND  DEGRADED  RD_OPS   RD  WR_OPS   WR  USED COMPR  UNDER COMPR
-device_health_metrics   0 B        0       0       0                   0        0         0       0  0 B       0  0 B         0 B          0 B
+POOL_NAME              USED  OBJECTS  CLONES  COPIES  MISSING_ON_PRIMARY  UNFOUND  DEGRADED  RD_OPS   RD  WR_OPS      WR  USED COMPR  UNDER COMPR
+device_health_metrics   0 B        3       0       9                   0        0         0       0  0 B       3  58 KiB         0 B          0 B
 
-total_objects    0
-total_used       0 B
-total_avail      0 B
-total_space      0 B
+total_objects    3
+total_used       8.0 GiB
+total_avail      5.7 TiB
+total_space      5.7 TiB
 ```
 
 ##Dashboard
@@ -282,7 +368,7 @@ After you connect to the dashboard you will need to login for secure access. Roo
    kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath="{['data']['password']}" | base64 --decode && echo
    
 ```   
-dlNt<c,5U!7Ey6q_zo"`
+y.lkHZmMQbH7'VM->J$_
 ```
 
 
