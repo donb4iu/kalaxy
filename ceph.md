@@ -319,7 +319,7 @@ ID  HOST              USED  AVAIL  WR OPS  WR DATA  RD OPS  RD DATA  STATE
  ceph osd pool ls detail
 ```
 pool 1 'device_health_metrics' replicated size 3 min_size 2 crush_rule 0 object_hash rjenkins pg_num 1 pgp_num 1 autoscale_mode on last_change 29 flags hashpspool stripe_width 0 pg_num_min 1 application mgr_devicehealth```
-
+```
 **[root@rook-ceph-tools-5b4b587f6b-f6kxc /]#**
  
  rados df
@@ -332,6 +332,18 @@ total_used       8.0 GiB
 total_avail      5.7 TiB
 total_space      5.7 TiB
 ```
+
+```
+
+ceph status
+ceph osd tree
+ceph osd status
+ceph osd df
+ceph osd utilization
+
+```
+
+
 
 ##Dashboard
 
@@ -395,3 +407,136 @@ y.lkHZmMQbH7'VM->J$_
    kubectl patch crd/cephobjectstoreusers.ceph.rook.io -p '{"metadata":{"finalizers":[]}}' --type=merge
 
 ```customresourcedefinition.apiextensions.k8s.io/cephobjectstoreusers.ceph.rook.io patched```
+
+
+## Remove storage Host-based cluster
+
+[Ceph OSD Management](https://github.com/rook/rook/blob/master/Documentation/ceph-osd-mgmt.md)
+
+Update your CephCluster CR. Depending on your CR settings, you may need to remove the device from the list or update the device filter. If you are using useAllDevices: true, no change to the CR is necessary.
+
+**_IMPORTANT:_** On host-based clusters, you may need to stop the Rook Operator while performing OSD removal steps in order to prevent Rook from detecting the old OSD and trying to re-create it before the disk is wiped or removed.
+
+### To stop the Rook Operator, run 
+```
+kubectl -n rook-ceph scale deployment rook-ceph-operator --replicas=0
+```
+
+**_IMPORTANT:_** You must perform steps below to 
+ - (1) purge the OSD and either (2.a) delete the underlying data 
+ - (2.b)replace the disk before starting the Rook Operator again.
+
+### Start the Rook operator run:
+
+```
+ kubectl -n rook-ceph scale deployment rook-ceph-operator --replicas=1.
+```
+
+### Purge the OSD from the Ceph cluster
+    
+OSD removal can be automated with the example found in the [rook-ceph-purge-osd job](https://github.com/rook/rook/blob/{{ branchName }}/cluster/examples/kubernetes/ceph/osd-purge.yaml). 
+
+**_IMPORTANT:_** In the osd-purge.yaml, change the **<OSD-IDs>** to the ID(s) of the OSDs you want to remove.
+    
+- Run the job: kubectl create -f osd-purge.yaml
+- When the job is completed, review the logs to ensure success: kubectl -n rook-ceph logs -l app=rook-ceph-purge-osd
+- When finished, you can delete the job: kubectl delete -f osd-purge.yaml
+    
+If you want to remove OSDs by hand, continue with the following sections. However, we recommend you to use the above-mentioned job to avoid operation errors.
+
+### Replace an OSD
+
+To replace a disk that has failed:
+
+- Run the steps in the previous section to Remove an OSD.
+- Replace the physical device and verify the new device is attached.
+- Check if your cluster CR will find the new device. If you are using useAllDevices: true you can skip this step. If your cluster CR lists individual devices or uses a device filter you may need to update the CR.
+- The operator ideally will automatically create the new OSD within a few minutes of adding the new device or updating the CR. If you don't see a new OSD automatically created, restart the operator (by deleting the operator pod) to trigger the OSD creation.
+- Verify if the OSD is created on the node by running ceph osd tree from the toolbox.
+
+Note that the OSD might have a different ID than the previous OSD that was replaced.
+
+
+## Block Storage
+
+[Get block storage from Ceph](https://itnext.io/deploy-a-ceph-cluster-on-kubernetes-with-rook-d75a20c3f5b1)
+
+**#( 05/02/21@ 5:24PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/rook-ceph@master✗✗✗**
+
+   kubectl apply -f ./rbd/storageclass.yaml
+   
+```
+cephblockpool.ceph.rook.io/replicapool created
+storageclass.storage.k8s.io/rook-ceph-block created
+``` 
+
+
+**#( 05/02/21@ 5:29PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/rook-ceph/rbd@master✗✗✗**
+    
+    kubectl get pvc,pv
+```  
+NAME                              STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS      AGE
+persistentvolumeclaim/mongo-pvc   Bound    pvc-84409028-a00e-4936-bcf0-63ff36068893   5Gi        RWO            rook-ceph-block   32s
+
+NAME                                                        CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                              STORAGECLASS      REASON   AGE
+persistentvolume/pvc-6396501d-8a0b-46aa-a576-a6218908683e   8Gi        RWO            Delete           Bound    monitor/prometheus-server          nfs-ssd1                   131d
+persistentvolume/pvc-786f572c-e95c-4556-839a-5081bfe1a0af   2Gi        RWO            Delete           Bound    monitor/prometheus-alertmanager    nfs-ssd1                   131d
+persistentvolume/pvc-84409028-a00e-4936-bcf0-63ff36068893   5Gi        RWO            Delete           Bound    amd64default/mongo-pvc             rook-ceph-block            29s
+persistentvolume/pvc-f5ddda65-eeef-41c3-b9c4-da2715b5ac33   1Gi        RWO            Delete           Bound    community-grid/rosettaathomedata   nfs-ssd1                   48d
+```  
+## Deploy MongoDB Community Edition on CEPH block storage
+
+**#( 05/02/21@ 5:54PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/rook-ceph/rbd@master✗✗✗**
+  
+   kubectl apply -f mongo.yaml
+``` 
+deployment.apps/mongo created
+service/mongo created
+
+ ```  
+**#( 05/02/21@ 5:54PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/rook-ceph/rbd@master✗✗✗**
+
+    kubectl get pods,svc
+ ```  
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/bear-67fd7744bf-f6t9f    1/1     Running   1          4d23h
+pod/hare-5446fcff89-jb5zx    1/1     Running   0          4d23h
+pod/mongo-5d7ff54f7d-qh67w   1/1     Running   0          32s
+pod/moose-57b7db48cb-mx7jc   1/1     Running   1          4d23h
+
+NAME            TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)           AGE
+service/bear    ClusterIP   10.105.36.211    <none>        80/TCP            20d
+service/hare    ClusterIP   10.101.99.44     <none>        80/TCP            20d
+service/mongo   NodePort    10.100.234.50    <none>        27017:31017/TCP   31s
+service/moose   ClusterIP   10.108.246.110   <none>        80/TCP            20d
+ ```  
+
+**#( 05/02/21@ 5:55PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/rook-ceph/rbd@master✗✗✗**
+
+   kubectl get pods  -o wide
+``` 
+NAME                     READY   STATUS    RESTARTS   AGE     IP              NODE       NOMINATED NODE   READINESS GATES
+bear-67fd7744bf-f6t9f    1/1     Running   1          4d23h   10.244.0.104    amd64-02   <none>           <none>
+hare-5446fcff89-jb5zx    1/1     Running   0          4d23h   10.244.0.99     amd64-02   <none>           <none>
+mongo-5d7ff54f7d-qh67w   1/1     Running   0          9m28s   10.244.12.121   amd64-06   <none>           <none>
+moose-57b7db48cb-mx7jc   1/1     Running   1          4d23h   10.244.0.96     amd64-02   <none>           <none>
+```
+
+**#( 05/02/21@ 5:54PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/rook-ceph/rbd@master✗✗✗**
+
+   kubectl get nodes -o wide
+
+ ```     
+NAME              STATUS   ROLES    AGE    VERSION    INTERNAL-IP    EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+amd64-02          Ready    master   188d   v1.17.11   192.168.2.56   <none>        Ubuntu 20.04.2 LTS   5.4.0-72-generic   docker://19.3.12
+amd64-03          Ready    <none>   188d   v1.17.11   192.168.2.57   <none>        Ubuntu 20.04.2 LTS   5.4.0-72-generic   docker://19.3.12
+amd64-04          Ready    <none>   180d   v1.17.11   192.168.2.58   <none>        Ubuntu 20.04.2 LTS   5.4.0-72-generic   docker://19.3.12
+amd64-05          Ready    <none>   158d   v1.17.11   192.168.2.59   <none>        Ubuntu 20.04.2 LTS   5.4.0-72-generic   docker://19.3.12
+amd64-06          Ready    <none>   50d    v1.17.11   192.168.2.60   <none>        Ubuntu 20.04.2 LTS   5.4.0-72-generic   docker://19.3.12
+arm64-master-01   Ready    <none>   69d    v1.17.11   192.168.2.50   <none>        Ubuntu 20.04.2 LTS   5.4.0-1034-raspi   docker://19.3.12
+arm64-worker-02   Ready    <none>   69d    v1.17.11   192.168.2.52   <none>        Ubuntu 20.04.2 LTS   5.4.0-1034-raspi   docker://19.3.12
+arm64-worker-03   Ready    <none>   84d    v1.17.11   192.168.2.53   <none>        Ubuntu 20.04.2 LTS   5.4.0-1034-raspi   docker://19.3.12
+arm64-worker-04   Ready    <none>   69d    v1.17.11   192.168.2.54   <none>        Ubuntu 20.04.2 LTS   5.4.0-1034-raspi   docker://19.3.12
+ ```   
+
+MongoDB Compass 192.168.2.60:31017
