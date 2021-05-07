@@ -444,6 +444,17 @@ OSD removal can be automated with the example found in the [rook-ceph-purge-osd 
     
 If you want to remove OSDs by hand, continue with the following sections. However, we recommend you to use the above-mentioned job to avoid operation errors.
 
+### Remove the OSD
+
+- kubectl -n rook-ceph scale deployment rook-ceph-operator --replicas=0
+- kubectl -n rook-ceph scale deployment rook-ceph-osd-<ID> --replicas=0
+- kubectl create -f osd-purge.yaml
+- kubectl -n rook-ceph logs -l app=rook-ceph-purge-osd
+- kubectl delete -f osd-purge.yaml
+- kubectl delete deployment -n rook-ceph rook-ceph-osd-<ID>
+- kubectl -n rook-ceph scale deployment rook-ceph-operator --replicas=1
+
+
 ### Replace an OSD
 
 To replace a disk that has failed:
