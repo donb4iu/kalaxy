@@ -1,7 +1,143 @@
 # CEPH
 
    
-## Setup storage devices   
+## Setup storage devices 
+### New
+
+**dbuddenbaum@arm64-worker-04:~$** 
+
+sudo fdisk /dev/sda
+
+```
+Welcome to fdisk (util-linux 2.34).
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+Command (m for help): p
+Disk /dev/sda: 931.53 GiB, 1000204886016 bytes, 1953525168 sectors
+Disk model: 002-1SD102
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+Disklabel type: gpt
+Disk identifier: 4565B06D-9C14-48AC-ADCF-EDF03DD62518
+
+Command (m for help): n
+Partition number (1-128, default 1):
+First sector (34-1953525134, default 2048):
+Last sector, +/-sectors or +/-size{K,M,G,T,P} (2048-1953525134, default 1953525134): +32G
+
+Created a new partition 1 of type 'Linux filesystem' and of size 32 GiB.
+Partition #1 contains a xfs signature.
+
+Do you want to remove the signature? [Y]es/[N]o: y
+
+The signature will be removed by a write command.
+
+Command (m for help): n
+Partition number (2-128, default 2):
+First sector (67110912-1953525134, default 67110912):
+Last sector, +/-sectors or +/-size{K,M,G,T,P} (67110912-1953525134, default 1953525134): +68G
+
+Created a new partition 2 of type 'Linux filesystem' and of size 68 GiB.
+
+Command (m for help): n
+Partition number (3-128, default 3):
+First sector (209717248-1953525134, default 209717248):
+Last sector, +/-sectors or +/-size{K,M,G,T,P} (209717248-1953525134, default 1953525134):
+
+Created a new partition 3 of type 'Linux filesystem' and of size 831.5 GiB.
+
+Command (m for help): w
+The partition table has been altered.
+Calling ioctl() to re-read partition table.
+Syncing disks.
+
+dbuddenbaum@arm64-worker-04:~$ lsblk -f
+NAME        FSTYPE   LABEL       UUID                                 FSAVAIL FSUSE% MOUNTPOINT
+loop0       squashfs                                                        0   100% /snap/core18/1990
+loop1       squashfs                                                        0   100% /snap/core18/2002
+loop2       squashfs                                                        0   100% /snap/snapd/11408
+loop3       squashfs                                                        0   100% /snap/snapd/11584
+loop5       squashfs                                                        0   100% /snap/lxd/19648
+loop6       squashfs                                                        0   100% /snap/lxd/20330
+sda
+├─sda1
+├─sda2
+└─sda3
+mmcblk0
+├─mmcblk0p1 vfat     system-boot B726-57E2                             132.8M    47% /boot/firmware
+└─mmcblk0p2 ext4     writable    483efb12-d682-4daf-9b34-6e2f774b56f7    6.1G    75% /
+```
+Setup for rPi4
+
+**dbuddenbaum@arm64-worker-04:~$**
+  sudo mkfs.xfs /dev/sda1 -f
+```  
+meta-data=/dev/sda1              isize=512    agcount=4, agsize=2097152 blks
+         =                       sectsz=4096  attr=2, projid32bit=1
+         =                       crc=1        finobt=1, sparse=1, rmapbt=0
+         =                       reflink=1
+data     =                       bsize=4096   blocks=8388608, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0, ftype=1
+log      =internal log           bsize=4096   blocks=4096, version=2
+         =                       sectsz=4096  sunit=1 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+```
+
+**dbuddenbaum@arm64-worker-04:~$**
+ 
+ sudo mkfs.ext4 /dev/sda2
+ 
+``` 
+mke2fs 1.45.5 (07-Jan-2020)
+Creating filesystem with 17825792 4k blocks and 4456448 inodes
+Filesystem UUID: 78ab6377-d48b-4e4e-bd45-765505f600dd
+Superblock backups stored on blocks:
+	32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208,
+	4096000, 7962624, 11239424
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (131072 blocks): done
+Writing superblocks and filesystem accounting information: done
+```
+
+**dbuddenbaum@arm64-worker-04:~$** 
+
+sudo mkdir /mnt/ssd
+
+**dbuddenbaum@arm64-worker-04:~$** 
+
+sudo mount /dev/sdb1 /mnt/ssd
+    
+**dbuddenbaum@arm64-worker-04:~$** 
+
+sudo mkdir /mnt/var
+
+**dbuddenbaum@arm64-worker-04:~$** 
+
+sudo mount /dev/sda2 /mnt/var
+    
+**dbuddenbaum@arm64-worker-04:~$**
+ 
+ sudo vi /etc/fstab
+ 
+    UUID=7aa06485-7262-4bfb-beb2-db61fe70b3bf       /mnt/ssd       xfs     defaults        0       0
+    UUID=78ab6377-d48b-4e4e-bd45-765505f600dd       /var       ext4     defaults        0       2
+
+**dbuddenbaum@arm64-worker-04:~$**
+ 
+ sudo rsync -aqxP /var/* /mnt/var
+ 
+**dbuddenbaum@arm64-worker-04:~$** 
+
+sudo umount /mnt/var
+ 
+sudo shutdown -r 
+
+### Old  
    
 sudo parted -l
 
@@ -92,6 +228,21 @@ Attach the SSD drive to the Raspberry Pi with USB
     sudo mkdir /mnt/ssd
     sudo mount /dev/sdb1 /mnt/ssd
 
+**dbuddenbaum@amd64-06:~$** sudo vi /etc/fstab
+    
+    # /etc/fstab: static file system information.
+    #
+    # Use 'blkid' to print the universally unique identifier for a
+    # device; this may be used with UUID= as a more robust way to name devices
+    # that works even if disks are added and removed. See fstab(5).
+    #
+    # <file system> <mount point>   <type>  <options>       <dump>  <pass>
+    # / was on /dev/sda5 during installation
+    UUID=d736fb02-8e7a-42ce-948b-2321a0691b0c /               ext4    errors=remount-ro 0       1
+    # /boot/efi was on /dev/sda1 during installation
+    UUID=EA10-B595  /boot/efi       vfat    umask=0077      0       1
+    /dev/sdb1        /mnt/ssd       xfs     defaults        0       0
+    ##/swapfile                                 none            swap    sw              0       0
 
 ## disk clean up
 

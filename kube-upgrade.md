@@ -582,21 +582,6 @@ Setting up kubeadm (1.18.17-00) ...
    ```
 deployment.apps/rook-ceph-operator scaled
 ```
-**#( 05/07/21@ 4:55PM )( dbuddenbaum@dbuddenbaum-mbp ):~**
-   kubectl -n rook-ceph scale deployment rook-ceph-osd-7-75c759c84b-hdrf8 --replicas=0
-   ```
-Error from server (NotFound): deployments.apps "rook-ceph-osd-7-75c759c84b-hdrf8" not found
-```
-**#( 05/07/21@ 4:56PM )( dbuddenbaum@dbuddenbaum-mbp ):~**
-   kubectl -n rook-ceph scale deployment rook-ceph-osd-7 --replicas=0
-   ```
-deployment.apps/rook-ceph-osd-7 scaled
-```
-**#( 05/07/21@ 4:58PM )( dbuddenbaum@dbuddenbaum-mbp ):~**
-   kubectl -n rook-ceph scale deployment rook-ceph-osd-7 --replicas=1
-   ```
-deployment.apps/rook-ceph-osd-7 scaled
-```
 **#( 05/07/21@ 5:00PM )( dbuddenbaum@dbuddenbaum-mbp ):~**
    kubectl -n rook-ceph scale deployment rook-ceph-osd-8 --replicas=0
    ```
@@ -611,29 +596,12 @@ deployment.apps/rook-ceph-osd-8 scaled
    ```
 Error from server (AlreadyExists): error when creating "osd-purge.yaml": jobs.batch "rook-ceph-purge-osd" already exists
 ```
-**#( 05/07/21@ 5:02PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/rook-ceph/utils@master✗✗✗**
-   kubectl delete -f osd-purge.yaml
-   ```
-job.batch "rook-ceph-purge-osd" deleted
-```
 **#( 05/07/21@ 5:03PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/rook-ceph/utils@master✗✗✗**
-   kubectl create -f osd-purge.yaml
-   ```
-job.batch/rook-ceph-purge-osd created
-```
-**#( 05/07/21@ 5:03PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/rook-ceph/utils@master✗✗✗**
-   kubectl -n rook-ceph logs -l app=rook-ceph-purge-osd
-**#( 05/07/21@ 5:06PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/rook-ceph/utils@master✗✗✗**
    kubectl -n rook-ceph logs -l app=rook-ceph-purge-osd
 **#( 05/07/21@ 5:06PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/rook-ceph/utils@master✗✗✗**
    kubectl delete -f osd-purge.yaml
    ```
 job.batch "rook-ceph-purge-osd" deleted
-```
-**#( 05/07/21@ 5:07PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/rook-ceph/utils@master✗✗✗**
-   kubectl delete deployment -n rook-ceph rook-ceph-osd-8
-   ```
-Error from server (NotFound): deployments.apps "rook-ceph-osd-8" not found
 ```
 
 **#( 05/07/21@ 5:17PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/rook-ceph/utils@master✗✗✗**
@@ -659,7 +627,9 @@ Hit:3 https://packages.cloud.google.com/apt kubernetes-xenial InRelease
 Fetched 324 kB in 1s (292 kB/s)
 Reading package lists... Done
 N: Skipping acquire of configured file 'stable/binary-i386/Packages' as repository 'https://download.docker.com/linux/ubuntu focal InRelease' doesn't support architecture 'i386'
-dbuddenbaum@amd64-06:~$ sudo apt-get install -y --allow-change-held-packages kubelet=1.18.17-00 kubectl=1.18.17-00
+```
+**dbuddenbaum@amd64-06:~$** sudo apt-get install -y --allow-change-held-packages kubelet=1.18.17-00 kubectl=1.18.17-00
+```
 Reading package lists... Done
 Building dependency tree
 Reading state information... Done
@@ -689,4 +659,10 @@ Setting up kubelet (1.18.17-00) ...
    kubectl uncordon amd64-06
    ```
 node/amd64-06 uncordoned
+```
+
+**#( 05/07/21@ 7:27PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/rook-ceph/utils@master✗✗✗**
+   kubectl -n rook-ceph scale deployment rook-ceph-operator --replicas=1
+```   
+deployment.apps/rook-ceph-operator scaled
 ```
