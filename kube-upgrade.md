@@ -615,6 +615,93 @@ pod/rook-ceph-crashcollector-amd64-06-56bcd6f554-wqbsv evicted
 node/amd64-06 evicted
 ```
 
+
+### remove ceph osd
+
+**dbuddenbaum@amd64-03:~$**
+ 
+ sudo umount /mnt/ssd
+ 
+**dbuddenbaum@amd64-03:~$**
+ 
+ sudo mkfs.xfs /dev/sdb1 -f
+ 
+    meta-data=/dev/sdb1              isize=512    agcount=4, agsize=1953088 blks
+             =                       sectsz=512   attr=2, projid32bit=1
+             =                       crc=1        finobt=1, sparse=1, rmapbt=0
+             =                       reflink=1
+    data     =                       bsize=4096   blocks=7812352, imaxpct=25
+             =                       sunit=0      swidth=0 blks
+    naming   =version 2              bsize=4096   ascii-ci=0, ftype=1
+    log      =internal log           bsize=4096   blocks=3814, version=2
+             =                       sectsz=512   sunit=0 blks, lazy-count=1
+    realtime =none                   extsz=4096   blocks=0, rtextents=0
+
+**dbuddenbaum@amd64-03:~$**
+ 
+ lsblk -f
+ 
+    NAME   FSTYPE         LABEL UUID                                 FSAVAIL FSUSE% MOUNTPOINT
+    sda
+    ├─sda1 vfat                 6B71-1BD1                               511M     0% /boot/efi
+    ├─sda2
+    └─sda5 ext4                 36a22861-fc41-44c0-a77f-3f7320e4a78d   89.9G    12% /
+    sdb
+    ├─sdb1 xfs                  1a0f5b3e-dbfc-4f34-bbf4-7d68798aaf09
+    └─sdb2 ceph_bluestore
+    sr0
+    
+**dbuddenbaum@amd64-03:~$**
+ 
+ sudo mount /dev/sdb1 /mnt/ssd
+ 
+**dbuddenbaum@amd64-03:~$**
+ 
+ sudo fdisk /dev/sdb
+ 
+
+    Welcome to fdisk (util-linux 2.34).
+    Changes will remain in memory only, until you decide to write them.
+    Be careful before using the write command.
+
+
+    Command (m for help): d
+    Partition number (1,2, default 2):
+
+    Partition 2 has been deleted.
+
+    Command (m for help): n
+    Partition number (2-128, default 2):
+    First sector (62500864-976773134, default 62500864):
+    Last sector, +/-sectors or +/-size{K,M,G,T,P} (62500864-976773134, default 976773134):
+
+    Created a new partition 2 of type 'Linux filesystem' and of size 436 GiB.
+    Partition #2 contains a ceph_bluestore signature.
+
+    Do you want to remove the signature? [Y]es/[N]o: y
+
+    The signature will be removed by a write command.
+
+    Command (m for help): w
+    The partition table has been altered.
+    Syncing disks.
+
+**dbuddenbaum@amd64-03:~$**
+ 
+ lsblk -f
+ 
+    NAME   FSTYPE LABEL UUID                                 FSAVAIL FSUSE% MOUNTPOINT
+    sda
+    ├─sda1 vfat         6B71-1BD1                               511M     0% /boot/efi
+    ├─sda2
+    └─sda5 ext4         36a22861-fc41-44c0-a77f-3f7320e4a78d   89.9G    12% /
+    sdb
+    ├─sdb1 xfs          1a0f5b3e-dbfc-4f34-bbf4-7d68798aaf09   29.6G     1% /mnt/ssd
+    └─sdb2
+    sr0
+
+### continue upgrade
+
 **dbuddenbaum@amd64-06:~$** sudo apt-get update
 ```
 Hit:1 http://us.archive.ubuntu.com/ubuntu focal InRelease
