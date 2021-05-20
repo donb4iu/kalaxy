@@ -2,8 +2,12 @@
 
 ## Install
 
+**#( 05/13/21@ 9:43PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/alvearie@master✗✗✗**
 
-kubectl create namespace alvearie
+kubectl create -f ns.yaml
+
+    namespace/alvearie created
+
 
 kubectl config set-context --current --namespace=alvearie
 
@@ -29,11 +33,11 @@ kubectl config set-context --current --namespace=alvearie
 
 **#( 04/11/21@ 2:53AM )( dbuddenbaum@dbuddenbaum-mbp ):**~/Documents/rPi4/patient-browser/chart@master✔
 
-   helm install fhir-ui . --set fhirServer=https://192.168.2.15/fhir-server/api/v4
+   helm install fhir-ui . --set fhirServer=https://192.168.2.13/fhir-server/api/v4
 
 ```   
 #( 04/11/21@ 3:16AM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/patient-browser/chart@master✔
-   helm install fhir-ui1 . --set fhirServer=https://192.168.2.15/fhir-server/api/v4
+   helm install fhir-ui1 . --set fhirServer=https://192.168.2.13/fhir-server/api/v4
 WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /Users/dbuddenbaum/.kube/config
 WARNING: Kubernetes configuration file is world-readable. This is insecure. Location: /Users/dbuddenbaum/.kube/config
 NAME: fhir-ui1

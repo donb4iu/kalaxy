@@ -576,22 +576,27 @@ Setting up kubeadm (1.18.17-00) ...
 [upgrade] The configuration for this node was successfully updated!
 [upgrade] Now you should go ahead and upgrade the kubelet package using your package manager.
 ```
+### Clear Ceph Pods
 
 **#( 05/07/21@ 4:39PM )( dbuddenbaum@dbuddenbaum-mbp ):~**
+
    kubectl -n rook-ceph scale deployment rook-ceph-operator --replicas=0
    ```
 deployment.apps/rook-ceph-operator scaled
 ```
 **#( 05/07/21@ 5:00PM )( dbuddenbaum@dbuddenbaum-mbp ):~**
+
    kubectl -n rook-ceph scale deployment rook-ceph-osd-8 --replicas=0
    ```
 deployment.apps/rook-ceph-osd-8 scaled
 ```
 **#( 05/07/21@ 5:00PM )( dbuddenbaum@dbuddenbaum-mbp ):~**
+
    cd Documents/rPi4/kalaxy/yaml
 **#( 05/07/21@ 5:02PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml@master✗✗✗**
    cd rook-ceph/utils
 **#( 05/07/21@ 5:02PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/rook-ceph/utils@master✗✗✗**
+
    kubectl create -f osd-purge.yaml
    ```
 Error from server (AlreadyExists): error when creating "osd-purge.yaml": jobs.batch "rook-ceph-purge-osd" already exists
@@ -605,6 +610,7 @@ job.batch "rook-ceph-purge-osd" deleted
 ```
 
 **#( 05/07/21@ 5:17PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/kalaxy/yaml/rook-ceph/utils@master✗✗✗**
+   
    kubectl drain amd64-06 --ignore-daemonsets
    ```
 node/amd64-06 cordoned

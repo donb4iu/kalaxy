@@ -2,51 +2,56 @@
 
 # Namespaces by node architecture
 
-**First, you need to enable it in your kubernetes-apiserver:**
+## Enable-admission-plugins=PodNodeSelector
 
-**Edit /etc/kubernetes/manifests/kube-apiserver.yaml:**
+**dbuddenbaum@amd64-02:/etc/kubernetes/manifests$**
+ 
+ sudo vi kube-apiserver.yaml
 
-**--enable-admission-plugins=PodNodeSelector**
 
+    apiVersion: v1
+    kind: Pod
+    metadata:
+        annotations:
+            kubeadm.kubernetes.io/kube-apiserver.advertise-address.endpoint: 192.168.2.56:6443
+        creationTimestamp: null
+        labels:
+            component: kube-apiserver
+            tier: control-plane
+        name: kube-apiserver
+        namespace: kube-system
+    spec:
+        containers:
+        - command:
+          - kube-apiserver
+          - --advertise-address=192.168.2.56
+          - --allow-privileged=true
+          - --authorization-mode=Node,RBAC
+          - --client-ca-file=/etc/kubernetes/pki/ca.crt
+          - --enable-admission-plugins=NodeRestriction,PodNodeSelector
 
-## amd64default 
+## Create Namespace
+
+### amd64default 
 ```
-kind: Namespace
 apiVersion: v1
+kind: Namespace
 metadata:
-      name: amd64default
-  selfLink: /api/v1/namespaces/amd64default
-  uid: 9aab3749-6195-45d1-bb0e-1a9e26fa24a1
-  resourceVersion: '22212983'
-  creationTimestamp: '2021-01-09T11:11:53Z'
+  name: amd64default
   annotations:
-    kubectl.kubernetes.io/last-applied-configuration: >
-      {"apiVersion":"v1","kind":"Namespace","metadata":{"annotations":{"scheduler.alpha.kubernetes.io/node-selector":"kubernetes.io/arch=amd64"},"name":"amd64default"},"spec":{},"status":{}}
-    scheduler.alpha.kubernetes.io/node-selector: kubernetes.io/arch=amd64
-spec:
-  finalizers:
-    - kubernetes
-status:
-  phase: Active
+      scheduler.alpha.kubernetes.io/node-selector: kubernetes.io/arch=amd64
+spec: {}
+status: {}
 ```
 
-## arm64default 
+### arm64default 
 ```
-kind: Namespace
 apiVersion: v1
+kind: Namespace
 metadata:
   name: arm64default
-  selfLink: /api/v1/namespaces/arm64default
-  uid: 2c1332da-a132-47c6-8e5e-01ca5c671318
-  resourceVersion: '22212981'
-  creationTimestamp: '2021-01-09T11:11:53Z'
   annotations:
-    kubectl.kubernetes.io/last-applied-configuration: >
-      {"apiVersion":"v1","kind":"Namespace","metadata":{"annotations":{"scheduler.alpha.kubernetes.io/node-selector":"kubernetes.io/arch=arm64"},"name":"arm64default"},"spec":{},"status":{}}
-    scheduler.alpha.kubernetes.io/node-selector: kubernetes.io/arch=arm64
-spec:
-  finalizers:
-    - kubernetes
-status:
-  phase: Active
+      scheduler.alpha.kubernetes.io/node-selector: kubernetes.io/arch=arm64
+spec: {}
+status: {}
 ```
