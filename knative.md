@@ -1,8 +1,15 @@
-# Istio
+# Reference
+
+[How to use Knative to deploy a Serverless Application on Kubernetes](https://itnext.io/how-to-use-knative-on-kubernetes-to-deploy-a-serverless-application-582d62fa2a9f)
 
 [Quick Start: Unboxing Istio Service Mesh](https://kwonghung-yip.medium.com/quick-start-unboxing-istio-service-mesh-64b61eb319d7)
 
 [Installing on the cluster](https://istio.io/latest/docs/setup/install/)
+
+[Knative Repo](https://github.com/knative/)
+
+
+## Istio
 
 **#( 05/20/21@ 5:48PM )( donbuddenbaum@donbs-iMac ):~/Documents/rPi4/istio**
 
@@ -44,7 +51,7 @@
     ✔ Ingress gateways installed
     ✔ Installation complete
     
-    
+## Knative    
     
 **#( 05/20/21@ 6:25PM )( donbuddenbaum@donbs-iMac ):~/Documents/rPi4/kalaxy/yaml/knative@master✗✗✗**
 
@@ -139,5 +146,11 @@
 **#( 05/21/21@ 2:43PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/knative-docs/docs/serving/samples/hello-world/helloworld-java-spark@release-0.23✔**
 
    curl http://helloworld-java.default.example.com
+   
+    Hello SparkJava Sample v1%
+    
+**#( 05/21/21@ 6:36PM )( dbuddenbaum@dbuddenbaum-mbp ):~/Documents/rPi4/knative-docs/docs/serving/samples/hello-world/helloworld-java-spark@release-0.23✔**
+
+   curl http://helloworld-java.amd64default.example.com
    
     Hello SparkJava Sample v1%
