@@ -3,15 +3,15 @@ kind: Service
 metadata:
   labels:
     application: kube-ops-view
-    component: frontend
-  name: kube-ops-view
+    component: redis
+  name: kube-ops-view-redis
   namespace: kube-ops
 spec:
   selector:
     application: kube-ops-view
-    component: frontend
-  type: NodePort
+    component: redis
+  type: ClusterIP
   ports:
-  - port: 80
+  - port: 6379
     protocol: TCP
-    targetPort: 8080
+    targetPort: 6379
